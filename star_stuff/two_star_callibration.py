@@ -3,7 +3,7 @@ import math #imports math
 from two_star_correction import two_star_correction #imports the previously written two correction module
 
 class two_Star_calibration(two_star_correction): #defines a class called two_star_callibration that inherits from the class of two_star_correction, has everything that two_star_correction, but can modify it.
-    def __init__(self,log): #defines __init__ with the variables self and log. init is a special variable that is a reference to the class itself. self is a refrence to the instance of the class.
+    def __init__(self,log): #defines __init__ with the variables self and log. __init___ is a special function called the constructor that is called when the class is instantiated. self is a refrence to the instance of the class.
         self.reset() #calls the reset function
         self.logger = log #sets logger function = to log
 
@@ -24,9 +24,10 @@ class two_Star_calibration(two_star_correction): #defines a class called two_sta
         else: #otherwise do this
             self.logger.error("Rotation matrix calculation failed. The identity was used instead") #calls a class called logger within the self class and that calls a function called error.
             return np.matrix(np.identity(3)) #returns the identity matrix
+
     def one_star_rotation_matrix(self):
         if(self.star_count<1):
-                          raise index_error("there are no loaded stars so cannot calculate matrix)" # checks to see if there is an adequate number of sars and returns an error message if there is not.
+            raise index_error("there are no loaded stars so cannot calculate matrix)" # checks to see if there is an adequate number of sars and returns an error message if there is not.
         the_star = self.stars[0] #sets the star equal to the first star in the list of stars.
         dAz = self.plus_minus180(the_Star.sAz-the_star.tAz)
         #dAlt = self.plusMinus180(theStar.sAlt-theStar.tAlt)
@@ -77,7 +78,8 @@ class two_Star_calibration(two_star_correction): #defines a class called two_sta
         sin_angle = math.sin(angle/2) #defines sin_angle
         quaternion = np.array([math.cos(angle/2), sin_angle*axis[0],sin_angle*axis[1], sin_angle*axis[2]]) #defines the quaternion
         return quaternion
-    def __quaternion_to_matrix(selfquaternion): #redefines the quaternion as a matrix
+
+    def __quaternion_to_matrix(self, quaternion): #converts the quaternion to a matrix
         s = quaternion[0];
         vx = quaternion[1];
         vy = quaternion[2];
@@ -113,5 +115,3 @@ class star(object): #creates a new class called star
         self.tAlt = tel_coordinates[1].r #the altitude coordinates of the telescope
         self.sAz = stel_coordinates[0].r #the stellar azimuth coordinates
         self.sAlt = stel_coordinates[1].r#the stellar altitude coordinates
-
-                    
