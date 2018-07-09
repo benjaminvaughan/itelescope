@@ -7,7 +7,7 @@ import pigpio
 
 DIR = 20 # direction GPIO pin
 step = 21 # step GPIO pin
-switch = 16 # GPIO pin of switch
+#switch = 16 # GPIO pin of switch
 
 #connect to pigpiod daemon
 pi = pigpio.pi()
@@ -16,7 +16,7 @@ pi.set_mode(DIR, pigpio.OUTPUT)
 pi.set_mode(step, pigpio.OUTPUT)
 
 pi.set_mode(switch,pio.INPUT)
-pi.set_pull_up_down(switch, pigpio.PULL_DOWN)
+#pi.set_pull_up_down(switch, pigpio.PULL_DOWN)
 
 mode = (14,15,18) #microstep resolution
 resolution = {'Full':(0,0,0),
@@ -34,7 +34,8 @@ pi.set_PWM_frequency(Step,500) #500 pulses per second
 
 try:
     while True:
-        pi.write(DIR, pi.read(switch)) # set direction
+        # pi.write(DIR, pi.read(switch)) # set direction
+        pi.write(DIR,0)
         sleep.(1)
 except KeyBoardInterrupt:
     print("\nCtrl-C presssed. Stopped pigpio and exiting...")
