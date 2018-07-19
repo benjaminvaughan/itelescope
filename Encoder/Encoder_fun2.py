@@ -1,47 +1,38 @@
-#1/usr/bin/env python
+#!/usr/bin/env python
 #for quadrature encoder
 
-import pigpio
-import time
+pin_a = 23 # pin where encoder signal a is connected
+pin_b = 22 # pin where encoder signal b is connected
+position = 0
+a_state = None
 
-channel_a = 23
-channel_b = 22
+def call_back_a(pin,level,tick):
+    global a_state
+    print(pin, level, tick)
+    a_state = level
 
-def setup():
-    global counter
-    global last_channel_b, current_channel_b
+
+def call_back_b(pin, level, tick):
+    global position
+    global direction
+    if a_state:
+        position += 1
+        direction = 'clockwise'
+    else:
+        position -= 1
+        direction = 'counter-clockwise'
+
+if __name__ == "__main__":
+    pi = pigpio.pi()
+    import time
+    import pigpio
     pi = pigpio.pi()
     pi.set_mode(channel_a, pigpio.INPUT)
     pi.set_mode(channel_b, pigpio.INPUT)
-    counter = 0
-    last_channel_b = 0
-    current_channel_b = 0
+    pi.callback(pin_a, 2, call_back_a)
+    pi.callback(pin_b, 1, call_back_b)
 
-def rotary_deal():
-    global counter
-    global last_channel_b, current_channel_b
-    flag = 0
-    last_channel_b = pi.read(channel_b)
-    while(not pi.read(channel_b):
-          current_channel_b = pi.read(channel_b)
-          flag = 1
-    if flag == 1:
-          flag = 0
-          if (last_channel_b == 0) and (current_channel_b == 1):
-        counter = counter + 1
-          if (last_channel_b == 1) and (current_channel_b == 0):
-        counter = counter - 1
-
-def main():
-          print_message()
-          while True:
-        rotary)deal()
-
-if __name__ == '__main__':
-    setup()
-    try:
-        main()
-
-    except KeyboardInterrupt:
-        print(program was interrupted by user)
-    
+    while True:
+        print('position')
+        print(direction)
+        time.sleep(1)
