@@ -39,14 +39,14 @@ def clear(ev=None):
     print(counter)
     time.sleep(1)
 
-    def loop():
+def loop():
         global counter
         while True:
             rotary_deal()
             print(counter)
 
 if __name__ == '__main__':
-    setup():
+    setup()
     try:
         loop()
     except KeyboardInterrupt:
