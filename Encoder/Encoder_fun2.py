@@ -1,5 +1,5 @@
 #1/usr/bin/env python
-
+#for quadrature encoder
 
 import pigpio
 import time
