@@ -16,9 +16,10 @@ while True:
         if code == 66:
             print('down')
         elif code == 67:
-            print('right')
+            motor.set_speed(128, 1000, 1)
+            print('counter-clockwise')
         elif code == 68:
-            print('left')
+            print('clockwise')
             motor.set_speed(128, 1000, 0)
         elif code == 65:
             print('up')
