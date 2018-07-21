@@ -43,31 +43,31 @@ finally:
     pi.set_PWM_dutycycle(step,0) #PWM off
     pi.stop()
 
-def generate_ramp(ramp):
+def generate_ramp(ramp): #generating a ramp up
     """
 generate ramp waveforms. ramp: list of [frequency,steps]
     """
 #generate a wave per ramp level
     pi.wave_clear() #clear existing waves
     length = len(ramp) #number of ramp levels
-    wid = [-1]*length
+    wid = [-1]*length #width of the length
 
-for i in range(length):
-    frequency = ramp[i][o]
-    micros = int(500000/frequency)
-    wf = []
-    wf.append(pigpio.pulse(1<<step,0,micros) # pulse on
-    wf.append(pigpio.pulse(0,1<<step, micros) #pulse off
-    pi.wave_add_generic(wf)
-    wid[i] = pi.wave_create()
+    for i in range(length): 
+        frequency = ramp[i][o]
+        micros = int(500000/frequency)
+        wf = []
+        wf.append(pigpio.pulse(1<<step,0,micros) # pulse on
+        wf.append(pigpio.pulse(0,1<<step, micros) #pulse off
+        pi.wave_add_generic(wf)
+        wid[i] = pi.wave_create()
 
 #generate a chain of waves
-chain =  []
-for i in range(length):
-    steps = ramp[i][1]
-    x = steps & 255
-    y = steps >> 8
-    chain += [255,0,wid[i],255,1,x,y]
-pi.wave_chain(chain) #transmit the wave
+        chain =  []
+        for i in range(length):
+            steps = ramp[i][1]
+            x = steps & 255
+            y = steps >> 8
+            chain += [255,0,wid[i],255,1,x,y]
+        pi.wave_chain(chain) #transmit the wave
 
               
