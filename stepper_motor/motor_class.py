@@ -23,4 +23,8 @@ class Motor():
     def set_speed(self, duty_cyle, frequency, direction):
         self.pi.set_PWM_dutycycle(self.step_pin, duty_cycle)
         self.pi.set_PWM_frequency(self.step_pin, frequency)
+        try:
+            while True:
+                pi.write(dir_pin, direction)
+                sleep(1)
 
