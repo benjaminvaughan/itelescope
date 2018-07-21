@@ -5,10 +5,11 @@ pin_a = 23 # pin where encoder signal a is connected
 pin_b = 22 # pin where encoder signal b is connected
 position = 0
 a_state = None
-
-def call_back_a(pin,level,tick):
+direction = 'string'
+constant = 360.0/900.0 
+def call_back_a(pin, level, tick):
     global a_state
-    print(pin, level, tick)
+    #print(pin, level, tick)
     a_state = level
 
 
@@ -21,18 +22,24 @@ def call_back_b(pin, level, tick):
     else:
         position -= 1
         direction = 'counter-clockwise'
+    degrees = position * constant
+    while degrees < 0:
+        degrees += 360
+    while degrees > 360:
+        degrees -= 360
+    print('position', degrees)
 
 if __name__ == "__main__":
-    pi = pigpio.pi()
     import time
     import pigpio
     pi = pigpio.pi()
-    pi.set_mode(channel_a, pigpio.INPUT)
-    pi.set_mode(channel_b, pigpio.INPUT)
+    pi.set_mode(pin_b, pigpio.INPUT)
+    pi.set_mode(pin_a, pigpio.INPUT)
     pi.callback(pin_a, 2, call_back_a)
     pi.callback(pin_b, 1, call_back_b)
 
     while True:
-        print('position')
-        print(direction)
+        #print('position')
+        #print(direction)
         time.sleep(1)
+#900 ticks per revolution
