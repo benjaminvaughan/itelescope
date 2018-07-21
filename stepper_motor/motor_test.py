@@ -18,6 +18,13 @@ while True:
         elif code == 67:
             motor.set_speed(128, 1000, 1)
             print('counter-clockwise')
+            try:
+                while True:
+                    motor.write_to_motor(1)
+            except code!= 67:
+                print(stopping motion)
+            finally:
+                motor.stopping_motor()
         elif code == 68:
             print('clockwise')
             motor.set_speed(128, 1000, 0)
