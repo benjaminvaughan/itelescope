@@ -20,7 +20,9 @@ class Motor():
         for i in range(3):
             pi.write(mode[i], resolution['1/32'][i])
 
-    def set_speed(self, duty_cyle, frequency, direction):
+    def set_speed(self, duty_cycle, frequency, direction):
+        print('speed', duty_cycle, frequency, direction)
+        self.pi.write(self.dir_pin, direction)
         self.pi.set_PWM_dutycycle(self.step_pin, duty_cycle)
         self.pi.set_PWM_frequency(self.step_pin, frequency)
         try:
