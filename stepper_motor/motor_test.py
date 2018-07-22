@@ -2,43 +2,37 @@
 from motor_class import Motor
 import pigpio
 
-import click
 import time
+import click
 
-motor = Motor(20, 21, 14, 15, 18)
+motor = Motor(21, 20, 18, 15, 14)
 print('Press an arrow key or q to quit')
+timeout = 0.1
 while True:
     key = click.getchar()
-    if key == 'q':
+    if key == 'q': # quit
         break
+    if key == 'l': 
+        motor.set_speed(128, 1000, 1)
+    if key == 'r':
+        motor.set_speed(128, 1000, 0)
+    if key == 's': # stop
+        motor.set_speed(0, 1000, 0)
     if len(key) == 3: # arrow key
-        code = ord(key[2])
-        if code == 66:
+        key = ord(key[2])
+        if key == 66: # down arrow
             print('down')
-        elif code == 67:
-            motor.set_speed(128, 1000, 1)
+        elif key == 67: # left arrow
             print('counter-clockwise')
-            try:
-                while True:
-                    motor.write_to_motor(1)
-            except code!= 67:
-                print(stopping motion)
-            finally:
-                motor.stopping_motor()
-        elif code == 68:
+            motor.set_speed(128, 1000, 1)
+            time.sleep(timeout)
+            motor.set_speed(0, 1000, 1)
+        elif key == 68: # right arrow
             print('clockwise')
             motor.set_speed(128, 1000, 0)
-            try:
-                while True:
-                    motor.write_to_motor(0)
-            except code != 68:
-                print(stopping motion)
-            finally:
-                motor.stopping_motor()
-        elif code == 65:
+            time.sleep(timeout)
+            motor.set_speed(0, 1000, 1)
+        elif key == 65: # up arrow
             print('up')
-        else:
-            motor.set_speed(0, 1000, 0)
-            print(code)
 
-
+motor.stopping_motor()
