@@ -12,9 +12,9 @@ while True:
     key = click.getchar()
     if key == 'q': # quit
         break
-    if key == 'l': 
+    if key == 'a': 
         motor.set_speed(128, 1000, 1)
-    if key == 'r':
+    if key == 'd':
         motor.set_speed(128, 1000, 0)
     if key == 's': # stop
         motor.set_speed(0, 1000, 0)
