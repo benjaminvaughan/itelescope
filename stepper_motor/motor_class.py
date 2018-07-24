@@ -1,6 +1,6 @@
 
 import pigpio
-
+import time
 class Motor():
     def __init__(self, dir_pin, step_pin, mode1, mode2, mode3, pi=None):
         if pi is None:
@@ -26,11 +26,11 @@ class Motor():
         self.pi.set_PWM_dutycycle(self.step_pin, duty_cycle)
         self.pi.set_PWM_frequency(self.step_pin, frequency)
 
-    def write_to_motor(direction):
-        self.pi.write(self.dir_pin,direction)
-        self.sleep(1)
+    def write_to_motor(self, direction):
+        #self.pi.write(self.dir_pin,direction)
+        time.sleep(1)
 
-    def stopping_motor():
+    def stopping_motor(self):
         self.pi.set_PWM_dutycycle(self.step_pin, 0)
         self.pi.stop()
         
