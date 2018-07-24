@@ -7,7 +7,9 @@ import click
 
 motor2 = Motor(21, 20, 25, 8, 7)
 motor1 = Motor(24, 23, 17, 27, 22)
+
 print('Press an arrow key or q to quit')
+motor2 = Motor(5 , 6, 13 , 19, 6)
 timeout = 0.1
 while True:
     key = click.getchar()
@@ -17,16 +19,18 @@ while True:
         motor1.set_speed(128, 1000, 1)
     if key == 'd':
         motor1.set_speed(128, 1000, 0)
-    if key == 'w': 
-        motor2.set_speed(128, 1000, 1)
     if key == 's':
         motor2.set_speed(128, 1000, 0)
-    if key == 'k': # stop
-        motor1.set_speed(0, 1000, 0)
+    if key == 'w':
+        motor2.set_speed(128, 1000, 0)
+    if key == 'k':
         motor2.set_speed(0, 1000, 0)
     if len(key) == 3: # arrow key
         key = ord(key[2])
         if key == 66: # down arrow
+            motor2.set_speed(128, 1000, 1)
+            time.sleep(timeout)
+            motor2.set_speed(0, 1000, 1)
             print('down')
             motor2.set_speed(128, 1000, 1)
             time.sleep(timeout)
