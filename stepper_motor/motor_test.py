@@ -9,7 +9,6 @@ motor2 = Motor(21, 20, 25, 8, 7)
 motor1 = Motor(24, 23, 17, 27, 22)
 
 print('Press an arrow key or q to quit')
-motor2 = Motor(5 , 6, 13 , 19, 6)
 timeout = 0.1
 while True:
     key = click.getchar()

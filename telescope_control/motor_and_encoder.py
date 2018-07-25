@@ -13,6 +13,9 @@ a_state = None
 direction = 'string'
 constant = 360.0/5000
 z_state = None
+degrees = None
+timeout = 0.1
+
 def call_back_a(pin, level, tick):
     global a_state
     a_state = level
@@ -20,14 +23,16 @@ def call_back_a(pin, level, tick):
 def call_back_b(pin, level, tick):
     global position
     global direction
+    global degrees
     if a_state:
         position += 1
         direction = 'clockwise'
+        return position
     else:
         position -= 1
         direction = 'counter-clockwise'
     degrees = position * constant
-
+    return degrees
 def call_back_z(pin, level, tick):
     global z_state
     z_state = level
@@ -42,7 +47,7 @@ if __name__ == "__main__":
     pi.callback(pin_a, 2, call_back_a)
     pi.callback(pin_b, 1, call_back_b)
     pi.callback(pin_z, 2, call_back_z)
-    
+    print('press q to quit, k to kill or awsd to move')
 
     while True:
         key = click.getchar()
@@ -84,7 +89,7 @@ if __name__ == "__main__":
         motor1.stopping_motor()
         motor2.stopping_motor()
 
-        print(position)
+        print(degrees)
         print(direction)
         time.sleep(0.1)
 
