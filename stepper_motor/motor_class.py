@@ -34,4 +34,9 @@ class Motor():
         self.pi.set_PWM_dutycycle(self.step_pin, 0)
         self.pi.stop()
         
+    def creating_wave(self, frequency):
+        self.pi.wave_create(self.step_pin, self.step_pin, frequency)
 
+    def one_step(self):
+        self.wave_send_once(wave_id)
+        
