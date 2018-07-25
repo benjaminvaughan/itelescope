@@ -1,34 +1,54 @@
-import time
+#program to test encoder
+
 import pigpio
-from time import sleep
-channel_a = 22
-channel_b = 23
+import time
+import click
 
-pi = pigpio.pi()
-pi.set_mode(channel_a, pigpio.INPUT)
-pi.set_mode(channel_b, pigpio.INPUT)
-pi.set_pull_up_down(channel_a, pigpio.PUD_DOWN)
-pi.set_pull_up_down(channel_b, pigpio.PUD_DOWN)
+pin_a = 16
+pin_b = 19
+pin_z = 26
+a_state = None
+direction = 'string'
+constant = 360.0 / 5000
+z_state = None
 
-counter = 0
-clklaststate = pi.read(clk) 
-try:
+def call_back_a(pin, level, tick):
+        global a_state
+        a_state = level
+
+def call_back_b(pin, level, tick):
+        global position
+        global direction
+        if a_state:
+                position += 1
+                direction = 'clockwise'
+                return position
+        else:
+                position -= 1
+                direction = 'counter-clockwise'
+                return position
+        degrees = position * constant
+        return degrees
+
+def call_back_z(pin, level, tick):
+        global z_state
+        z_state = level
+        if z_state:
+                position = 0
+                return position
+
+if __name__ = "__main__":
+        pi = pigpio.pi()
+        pi.set_mode(pin_b, pigpio.INPUT)
+        pi.set_mode(pin_a, pigpio.INPUT)
+        pi.set_mode(pin_z, pigpio.INPUT)
+        pi.callback(pin_a, 2, call_back_a)
+        pi.callback(pin_b, 1, call_back_b)
+        pi.callback(pin_z, 2, call_back_z)
 
         while True:
-                clkstate = pi.read(channel_a)
-                dtstate = pi.read(channel_b)
-                if clkstate != clklaststate:
-                        if dtstate != clkstate:
-                                counter += 1
-                        else:
-                                counter -= 1
-                                
-                        print counter
-                clklaststate = clkstate
-                sleep(.1)
-except KeyboardInterrupt Ctrl-C:
-        print('program stopped by keyboard interrupt')
-
-finally:
-        pigpio.stop()  #replace this with pigpio equivalent.
-
+                print(position)
+                print(direction)
+                print(degrees)
+                time.sleep(0.1)
+        
