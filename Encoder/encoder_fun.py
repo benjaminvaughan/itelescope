@@ -43,7 +43,7 @@ def loop():
         global counter
         while True:
             rotary_deal()
-            print(counter)
+            
 
 if __name__ == '__main__':
     setup()
@@ -51,4 +51,16 @@ if __name__ == '__main__':
         loop()
     except KeyboardInterrupt:
         print("\nCtrl-C presssed. Stopped pigpio and exiting...")
-    
+
+true_count = 0        
+def true_count():
+    if counter == 1:
+        true_count += 1
+        print(counterclockwise)
+    elif counter == -1:
+        true_count -= 1
+        print(clockwise)
+    else:
+        print(stopped)
+
+
