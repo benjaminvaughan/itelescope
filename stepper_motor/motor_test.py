@@ -5,7 +5,7 @@ import pigpio
 import time
 import click
 
-motor2 = Motor(21, 20, 25, 8, 7)
+motor2 = Motor(24, 23, 25, 8, 7)
 motor1 = Motor(10, 9, 17, 27, 22)
 
 print('Press an arrow key or q to quit')
