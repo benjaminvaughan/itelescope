@@ -21,7 +21,7 @@ while True:
     if key == 's':
         motor2.set_speed(128, 1000, 0)
     if key == 'w':
-        motor2.set_speed(128, 1000, 0)
+        motor2.set_speed(128, 1000, 1)
     if key == 'k':
         motor2.set_speed(0, 1000, 0)
     if len(key) == 3: # arrow key
