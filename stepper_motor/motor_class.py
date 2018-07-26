@@ -35,8 +35,8 @@ class Motor():
         self.pi.stop()
         
     def creating_wave(self, frequency):
-        self.pi.wave_create(self.step_pin, self.step_pin, 1.0/frequency)
+        self.pi.wave_create(self.step_pin, self.step_pin, 1.0 // frequency)
 
     def one_step(self):
-        self.wave_send_once(1)
+        self.pi.wave_send_once(1)
         
