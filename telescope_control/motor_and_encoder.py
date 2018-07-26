@@ -5,7 +5,7 @@ import time
 import click
 
 motor1 = Motor(21, 20, 25, 8 ,7)
-motor2 = Motor(24, 23, 17, 27, 22)
+motor2 = Motor(9, 10, 17, 27, 22)
 pin_a = 16
 pin_b = 19
 pin_z = 26
@@ -13,8 +13,9 @@ a_state = None
 direction = 'string'
 constant = 360.0/5000
 z_state = None
-degrees = None
+degrees = 0
 timeout = 0.1
+position = 0
 
 def call_back_a(pin, level, tick):
     global a_state
@@ -27,26 +28,23 @@ def call_back_b(pin, level, tick):
     if a_state:
         position += 1
         direction = 'clockwise'
-        return position
     else:
         position -= 1
         direction = 'counter-clockwise'
     degrees = position * constant
-    return degrees
 def call_back_z(pin, level, tick):
     global z_state
     z_state = level
     if z_state:
         position = 0
-        return position
 
 if __name__ == "__main__":
     pi = pigpio.pi()
     pi.set_mode(pin_b, pigpio.INPUT)
     pi.set_mode(pin_a, pigpio.INPUT)
-    pi.callback(pin_a, 2, call_back_a)
+    pi.callback(pin_a, 1, call_back_a)
     pi.callback(pin_b, 1, call_back_b)
-    pi.callback(pin_z, 2, call_back_z)
+    pi.callback(pin_z, 1, call_back_z)
     print('press q to quit, k to kill or awsd to move')
 
     while True:
