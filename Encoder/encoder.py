@@ -30,23 +30,20 @@ def call_back_b(pin, level, tick):
                 position -= 1
                 direction = 'counter-clockwise'
         degrees = position * constant
-        return degrees
 
 def call_back_z(pin, level, tick):
-        global z_state
-        z_state = level
-        if z_state:
+                global position
                 position = 0
-               
-
+                print('called z')
+                
 if __name__ == '__main__':
         pi = pigpio.pi()
         pi.set_mode(pin_b, pigpio.INPUT)
         pi.set_mode(pin_a, pigpio.INPUT)
         pi.set_mode(pin_z, pigpio.INPUT)
         pi.callback(pin_a, 2, call_back_a)
-        pi.callback(pin_b, 2, call_back_b)
-        pi.callback(pin_z, 2, call_back_z)
+        pi.callback(pin_b, 1, call_back_b)
+        pi.callback(pin_z, 1, call_back_z)
 
         while True:
                 print(direction)

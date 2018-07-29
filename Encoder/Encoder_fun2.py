@@ -38,7 +38,7 @@ if __name__ == "__main__":
     pi.set_mode(pin_a, pigpio.INPUT)
     pi.set_mode(pin_b, pigpio.INPUT)
     pi.callback(pin_a, 2, call_back_a)
-    pi.callback(pin_b, 1, call_back_b)
+    pi.callback(pin_b, 2, call_back_b)
     
     while True:
         #print('position')
