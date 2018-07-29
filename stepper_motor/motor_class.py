@@ -1,6 +1,8 @@
 
 import pigpio
 import time
+import click
+
 class Motor():
     def __init__(self, dir_pin, step_pin, mode1, mode2, mode3, pi=None):
         if pi is None:
@@ -39,4 +41,24 @@ class Motor():
 
     def one_step(self):
         self.pi.wave_send_once(1)
+
+    def motor_control(self, clockwise_key1, counter_clockwise_key1, clockwise_key2, counter_clockwise_key2):
+        while True:
+            key = click.getchar()
+            if key == 'q':
+                break
+            if key == 'clockwise_key1':
+                self.set_speed(128, 1000, 1)
+            if key == 'counter_clockwise_key1':
+                self.set_speed(128, 1000, 0)
+            if len(key) = 3: #arrow keys: 66 down,  67 left, 68 right, 65 up
+                key = ord(key[2])
+                if key == clockwise_key2:
+                    motor.set_speed(128, 1000, 1)
+                    time.sleep(0.1)
+                if key == counter_clockwise_key2:
+                    motor.set_speed(128, 1000, 0)
+                    time.sleep(0.1)
+                
+        
         
