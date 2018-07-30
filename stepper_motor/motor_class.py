@@ -28,10 +28,6 @@ class Motor():
         self.pi.set_PWM_dutycycle(self.step_pin, duty_cycle)
         self.pi.set_PWM_frequency(self.step_pin, frequency)
 
-    def write_to_motor(self, direction):
-        #self.pi.write(self.dir_pin,direction)
-        time.sleep(1)
-
     def stopping_motor(self):
         self.pi.set_PWM_dutycycle(self.step_pin, 0)
         self.pi.stop()
