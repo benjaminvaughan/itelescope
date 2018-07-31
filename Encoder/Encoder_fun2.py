@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 #for quadrature encoder
 
-pin_a = 16 # pin where encoder signal a is connected
-pin_b = 19 # pin where encoder signal b is connected
+pin_a = 23 # pin where encoder signal a is connected
+pin_b = 22 # pin where encoder signal b is connected
 position = 0
 a_state = None
 direction = 'string'
-constant = 360.0/5000
+constant = 360.0/900.0 
 def call_back_a(pin, level, tick):
     global a_state
     #print(pin, level, tick)
@@ -33,12 +33,15 @@ if __name__ == "__main__":
     import time
     import pigpio
     pi = pigpio.pi()
+<<<<<<< HEAD
     pi.set_mode(pin_b, pigpio.INPUT)
     pi.set_mode(pin_a, pigpio.INPUT)
+=======
     pi.set_mode(pin_a, pigpio.INPUT)
     pi.set_mode(pin_b, pigpio.INPUT)
+>>>>>>> 667bfdfdc3ef39fba06fea71205907a8ad6ec3b1
     pi.callback(pin_a, 2, call_back_a)
-    pi.callback(pin_b, 2, call_back_b)
+    pi.callback(pin_b, 1, call_back_b)
     
     while True:
         #print('position')
