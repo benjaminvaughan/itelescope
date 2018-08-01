@@ -19,12 +19,54 @@ class Motor():
 	   '1/8':(1,1,0),
 	   '1/16':(0,0,1),
 	   '1/32':(1,0,1)}
+
+    def 32_microsteps():
         for i in range(3):
             pi.write(mode[i], resolution['1/32'][i])
 
-    def set_speed(self, duty_cycle, frequency, direction):
-        print('speed', duty_cycle, frequency, direction)
+    def 16_microsteps():
+        for i in range(3):
+            pi.write(mode[i], resolution['1/16'][i])
+
+    def 8_microsteps():
+        for i in range(3):
+            pi.write(mode[i], resolution['1/8'][i])
+
+    def 4_microsteps():
+        for i in range(3):
+            pi.write(mode[i], resolution['1/4'][i])
+
+    def full_step():
+        for i in range(3):
+            pi.write(mode[i], resolution['Full step'][i])
+        
+
+    def set_speed(self, speed):
+        if speed == 1:
+            self.32_microsteps()
+            self.set_frequency_dutycycle(128, 1000)
+        elif speed == 2:
+            self.32_microsteps()
+            self.set_frequency_dutycycle(128, 2000)
+        elif speed == 3:
+            self.16_microsteps()
+            self.set_frequency_dutycycle(128, 1000)
+        elif speed == 4:
+            self.8_microsteps()
+            self.set_frequency_dutycycle(128, 1000)
+        elif speed == 5:
+            self.4_microsteps()
+            self.set_frequency_dutycycle(128, 1000)
+        elif speed == 6:
+            self.full_step()
+            self.set_frequency_dutycycle(128, 1000)
+        else:
+            print('invalid speed', speed)
+
+    def set_direction(self, direction):
         self.pi.write(self.dir_pin, direction)
+
+    def set_frequency_dutycycle(self, duty_cycle, frequency):
         self.pi.set_PWM_dutycycle(self.step_pin, duty_cycle)
         self.pi.set_PWM_frequency(self.step_pin, frequency)
 
