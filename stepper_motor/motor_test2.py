@@ -6,7 +6,7 @@ import click
 pi = pigpio.pi()
 motor2 = Motor(24, 23, 25, 8, 7, pi)
 motor1 = Motor(10, 9 , 17, 27, 22, pi)
-motor1.set_speed(1)
+motor1.set_speed(2)
 motor2.set_speed(2)
 
 print('press an arrow key or q to quit')
