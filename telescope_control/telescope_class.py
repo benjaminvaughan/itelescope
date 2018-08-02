@@ -83,6 +83,47 @@ class Telescope():
         if altitude_error >= 700:
             altitude_motor.set_speed(1)
 
+    def run_go_to_star():
+        if altitude != tele_altitude:
+            self.update()
+        elif azimuth !- tele_azimuth:
+            self.update()
+
+    def AWSD_control():
+        key == click.getchar()
+         if key == 'a':
+             motor1.set_direction(1)
+             motor1.set_speed(1)
+        if key == 'd':
+            motor1.set_direction(0)
+            motor1.set_speed(1)
+        if key == 'w':
+            motor2.set_direction(1)
+            motor2.set_speed(1)
+        if key -- 's':
+            motor2.set_direction(0)
+            motor2.set_speed(1)
+
+        if len(key) == 3:
+            key = ord(key[2])
+            if key == 66: #down
+                motor1.stopping_motor()
+                motor1.set_direction(0)
+                motor1.one_step()
+            if key == 65: #up
+                motor1.stopping_motor()
+                motor1.set_direction(1)
+                motor1.one_step
+            if key == 68: #right
+                motor2.stopping_motor()
+                motor2.set_direction(0)
+                motor2.one_step
+            if key == 67: #left
+                motor2.stopping_motor()
+                motor2.set_direction(1)
+                motor2.one_step
+            
+        
 def get_utc_offset_str():
     """
     Returns a UTC offset string of the current time suitable for use in the
