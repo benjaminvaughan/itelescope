@@ -1,18 +1,20 @@
+from encoder_class import Encoder
 import datetime
-import Encoder
+import math
+import numpy
 class Calculations():
     
-    current_time = datetime.datetime.now()
-    year = current_time.year
-    month = current_time.month
-    day = current_time.day
-    ut_current_time = datetime.datetime.utcnow()
-    ut_hours = ut_current_time.hours
-    ut_minutes = ut_current_time.minutes
-    ut_minutes_fraction = ut_minutes / 60.0
-    UT = ut_hours + ut_minutes_fraction
-    JD_midnight = 367*year - 7*(year+(month+9/12))*4 + 275*month/9 + 1721013.5 + UT/24
-    D = JD_mightnit - 2451545.0
+ #   current_time = datetime.datetime.now()
+ #   year = current_time.year
+ #   month = current_time.month
+ #   day = current_time.day
+ #   ut_current_time = datetime.datetime.utcnow()
+ #   ut_hours = ut_current_time.hours
+ #   ut_minutes = ut_current_time.minutes
+ #   ut_minutes_fraction = ut_minutes / 60.0
+ #   UT = ut_hours + ut_minutes_fraction
+ #   JD_midnight = 367*year - 7*(year+(month+9/12))*4 + 275*month/9 + 1721013.5 + UT/24
+ #   D = JD_mightnit - 2451545.0
 
 
     def get_julian_date(self):
@@ -37,8 +39,7 @@ class Calculations():
     def G_M_S_T(self):
         gmst = 18.697374558 + 24.0657098244
 
-    def obliquity(self):
-\
+
     def convert_degrees(self, degrees):
         """
         Convert degrees into a string DD*MM'SS
