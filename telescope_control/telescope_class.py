@@ -6,6 +6,9 @@ import sys
 
 #used for talking with meadle LX200 Protocol
 
+def degrees_to_string(degrees):
+    return ""
+
 class Telescope():
     def __init__(self):
         #self.altitude_encoder = Encoder()
@@ -27,40 +30,18 @@ class Telescope():
         return target_altitude
     
     def get_gast(self):
-        fmt =
-        year =
-        month =
-        day =
-        day = day - 1
-        UT =
-        JD_midnight = 367*year - 7(K+(M+9/12))4 + 275*month/9 + 1721013.5 + UT/24
-        D = JD_mightnit - 2451545.0
-        GMST = 6.697374558 + 0.06570982441908 * D + 1.00273790935
-        moon = 125.04 - 0.052954
-        sun = 280.47 + 0.98565
-        obliquity = 23.4393 - 0.0000004
-        nutation = 0.000319*sin(moon) - 0.000024* sin(2*sun)
-        eqeq = nutation * cos(obliquity)
-        gast = GMST + eqeq
-        
+        gast = Calculations.GAST()
+        return gast
+    
     def get_altitude(self):
-        altitude = self.altitude_encoder.print_degrees()
-        altitude = altitude.split(".")
-        arcminutes = int(altitude[1]) // 60.0
-        arcminutes = arcminutes.split(".")
-        arcseconds = int(arcminutes[1]) // 60.0
+        degrees = altitude_encoder.get_degrees()
+        altitude = calculations.convert_degrees(degrees)
+        return altitude
         
-        return "01*02"
 
     def get_azimuth(self):
-        azimuth = self.azimuth_encoder.print_degrees()
-        azimuth = azimuth.split(".")
-        arcminutes = int(azimuth[1]) // 60.0
-        arcminutes = arcminutes.split(".")
-        arcseconds = int(arcminutes[1]) // 60.0
-        arcseconds = 
-        return "01*02"
-    
+        azimuth = calculations.convert_degrees(azimuth_encoder)
+        return azimuth
         
     def update(self):
         self.current_altitude = self.altitude_encoder.print_degrees()
