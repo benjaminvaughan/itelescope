@@ -1,21 +1,20 @@
-#from encoder_class import Encoder
-#from motor_class import Motor
+from encoder_class import Encoder
+from motor_class import Motor
 import datetime
-#import pigpio
+import pigpio
 import sys
 
 #used for talking with meadle LX200 Protocol
 
-def degrees_to_string(degrees):
-    return ""
-
 class Telescope():
     def __init__(self):
-        #self.altitude_encoder = Encoder()
-        #self.altitide_motor = Motor()
-        #self.azimuth_encoder = Encoder()
-        #self.azimuth_motor = Motor()
+        self.altitude_encoder = Encoder()
+        self.altitide_motor = Motor()
+        self.azimuth_encoder = Encoder()
+        self.azimuth_motor = Motor()
         pass
+
+    def 
     
     def set_azimuth(self, target_azimuth):
         azimuth = Calculations.convert_to_azimuth(self.declination, self.right_ascension, self.latitude)
