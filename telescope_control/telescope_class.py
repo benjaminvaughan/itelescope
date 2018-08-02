@@ -43,12 +43,24 @@ class Telescope():
         eqeq = nutation * cos(obliquity)
         gast = GMST + eqeq
         
-
     def get_altitude(self):
+        altitude = self.altitude_encoder.print_degrees()
+        altitude = altitude.split(".")
+        arcminutes = int(altitude[1]) // 60.0
+        arcminutes = arcminutes.split(".")
+        arcseconds = int(arcminutes[1]) // 60.0
+        
         return "01*02"
 
     def get_azimuth(self):
+        azimuth = self.azimuth_encoder.print_degrees()
+        azimuth = azimuth.split(".")
+        arcminutes = int(azimuth[1]) // 60.0
+        arcminutes = arcminutes.split(".")
+        arcseconds = int(arcminutes[1]) // 60.0
+        arcseconds = 
         return "01*02"
+    
         
     def update(self):
         self.current_altitude = self.altitude_encoder.print_degrees()
