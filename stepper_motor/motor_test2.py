@@ -2,7 +2,7 @@ from motor_class import Motor
 import pigpio
 import time
 import click
-
+#change
 pi = pigpio.pi()
 motor2 = Motor(24, 23, 25, 8, 7, pi)
 motor1 = Motor(10, 9 , 17, 27, 22, pi)
