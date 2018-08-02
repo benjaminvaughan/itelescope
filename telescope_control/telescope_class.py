@@ -18,16 +18,12 @@ class Telescope():
         pass
     
     def set_azimuth(self, target_azimuth):
-        self.target_azimuth = target_azimuth
-        target_azimuth = "01*02"
-        print('testing set azimuth')
-        return target_azimuth
+        azimuth = Calculations.convert_to_azimuth(self.declination, self.right_ascension, self.latitude)
+        
     
     def set_altitude(self, target_altitude):
-        self.target_altitude = target_altitude
-        target_altitude = "01*02"
-        print('testing set altitude')
-        return target_altitude
+        altitude = Calculations.convert_to_altitude(self.declination, self.right_ascension, self.latitude)
+    
     
     def get_gast(self):
         gast = Calculations.GAST()
@@ -35,13 +31,14 @@ class Telescope():
     
     def get_altitude(self):
         degrees = altitude_encoder.get_degrees()
-        altitude = calculations.convert_degrees(degrees)
-        return altitude
-        
+        tele_altitude = calculations.convert_degrees(degrees)
+        return tele_altitude
+
 
     def get_azimuth(self):
-        azimuth = calculations.convert_degrees(azimuth_encoder)
-        return azimuth
+        degrees = azimuth_encoder.get_degrees()
+        tele_azimuth = calculations.convert_degrees(degrees)
+        return tele_azimuth
         
     def update(self):
         self.current_altitude = self.altitude_encoder.print_degrees()
