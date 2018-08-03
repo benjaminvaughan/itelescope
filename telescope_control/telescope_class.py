@@ -10,10 +10,9 @@ import numpy
 
 class Telescope():
     def __init__(self):
-    
         pi = pigpio.pi()
         self.altitude_encoder = Encoder(16, 19, 26, 1)
-        self.altitide_motor = Motor(24, 23, 26, 8, 7, pi)
+        self.altitude_motor = Motor(24, 23, 26, 8, 7, pi)
         self.azimuth_encoder = Encoder(20, 21, 12, 2)
         self.azimuth_motor = Motor(10, 9 , 17, 27, 22, pi)
         self.declination = 40.0
@@ -21,6 +20,7 @@ class Telescope():
         self.latitude = 40.0
         self.right_ascension = 40.0
         self.Calculations = Calculations()    
+
     def set_azimuth(self, target_azimuth):
         self.azimuth = Calculations.convert_to_azimuth(1, self.declination, self.right_ascension, self.latitude)
         self.Azimuth = float(self.azimuth)
@@ -68,29 +68,33 @@ class Telescope():
         altitude_error = abs(altitude_error)
         azimuth_error = abs(azimuth_error)
         if azimuth_error >= 0:
-            azimuth_motor.set_speed(6)
+            self.azimuth_motor.stopping_motor()
+        if azimuth_error >= 100:
+            self.azimuth_motor.set_speed(1)
         if azimuth_error >= 200:
-            azimuth_motor.set_speed(5)
+            self.azimuth_motor.set_speed(2)
         if azimuth_error >= 400:
-            azimuth_motor.set_speed(4)
+            self.azimuth_motor.set_speed(3)
         if azimuth_error >= 500:
-            azimuth_motor.set_speed(3)
+            self.azimuth_motor.set_speed(4)
         if azimuth_error >= 600:
-            azimuth_motor.set_speed(2)
+            self.azimuth_motor.set_speed(5)
         if azimuth_error >= 700:
-            azimuth_motor.set_speed(1)
+            self.azimuth_motor.set_speed(6)
         if altitude_error >= 0:
-            altitude_motor.set_speed(6)
+            self.altitude_motor.stopping_motor()
+        if altitude_error >= 100:
+            self.altitude_motor.set_speed(1)
         if altitude_error >= 200:
-            altitude_motor.set_speed(5)
+            self.altitude_motor.set_speed(2)
         if altitude_error >= 400:
-            altitude_motor.set_speed(4)
+            self.altitude_motor.set_speed(3)
         if altitude_error >= 500:
-            altitude_motor.set_speed(3)
+            self.altitude_motor.set_speed(4)
         if altitude_error >= 600:
-            altitude_motor.set_speed(2)
+            self.altitude_motor.set_speed(5)
         if altitude_error >= 700:
-            altitude_motor.set_speed(1)
+            self.altitude_motor.set_speed(6)
 
     def run_go_to_star():
         if altitude != tele_altitude:
