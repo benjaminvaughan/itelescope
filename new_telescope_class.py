@@ -3,60 +3,51 @@ from motor_class import Motor
 import datetime
 import pigpio
 import sys
-from calculations import Calculations
-import math
-import numpy
+
 #used for talking with meadle LX200 Protocol
 
 class Telescope():
     def __init__(self):
+        self.altitude_encoder = Encoder()
+        self.altitide_motor = Motor()
+        self.azimuth_encoder = Encoder()
+        self.azimuth_motor = Motor()
+        pass
+
+    def 
     
-        pi = pigpio.pi()
-        self.altitude_encoder = Encoder(16, 19, 26, 1)
-        self.altitide_motor = Motor(24, 23, 26, 8, 7, pi)
-        self.azimuth_encoder = Encoder(20, 21, 12, 2)
-        self.azimuth_motor = Motor(10, 9 , 17, 27, 22, pi)
-        self.declination = 40.0
-        self.longitude = 40.0
-        self.latitude = 40.0
-        self.right_ascension = 40.0
-        self.Calculations = Calculations()    
     def set_azimuth(self, target_azimuth):
-        self.azimuth = Calculations.convert_to_azimuth(1, self.declination, self.right_ascension, self.latitude)
-        self.Azimuth = float(self.azimuth)
-        return self.Azimuth         
-        print('azimuth set to', Azimuth)
-
+        azimuth = Calculations.convert_to_azimuth(self.declination, self.right_ascension, self.latitude)
+        
+    
     def set_altitude(self, target_altitude):
-        self.altitude = Calculations.convert_to_altitude(1, self.declination, self.right_ascension, self.latitude)
-        self.Altitude = float(self.altitude)
-        return self.Altitude
-        print('altitude set to', Altitude)
-
+        altitude = Calculations.convert_to_altitude(self.declination, self.right_ascension, self.latitude)
+    
+    
     def get_gast(self):
         gast = Calculations.GAST()
         return gast
     
     def get_altitude(self):
-        self.degrees = self.altitude_encoder.get_degrees()
-        self.tele_altitude = Calculations.convert_degrees(1, self.degrees)
-        return self.tele_altitude
+        degrees = altitude_encoder.get_degrees()
+        tele_altitude = calculations.convert_degrees(degrees)
+        return tele_altitude
 
 
     def get_azimuth(self):
-        self.degrees = self.azimuth_encoder.get_degrees()
-        self.tele_azimuth = Calculations.convert_degrees(1, self.degrees)
-        return self.tele_azimuth
+        degrees = azimuth_encoder.get_degrees()
+        tele_azimuth = calculations.convert_degrees(degrees)
+        return tele_azimuth
         
     def update(self):
-        self.current_altitude = self.altitude_encoder.get_degrees()
-        altitude_error = self.altitude - float(self.current_altitude)
-        self.current_azimuth = self.azimuth_encoder.get_degrees()
-        azimuth_error = self.azimuth  - float(self.current_azimuth)
+        self.current_altitude = self.altitude_encoder.print_degrees()
+        altitude_error = self.target_altitude - self.current_altitude
+        self.current_azimuth = self.azimuth_encoder.print_degrees()
+        azimuth_error = self.target_azimuth - self.current_azimuth
         if azimuth_error >0:
             print('positive azimuth')
             azimuth_motor.set_direction(1)
-        elif azimuth_error > 0:
+        elif azimuth_error >0:
             print('negative azimuth')
             azimuth_motor.set_direction(0)
         if altitude_error >= 0:
@@ -95,12 +86,12 @@ class Telescope():
     def run_go_to_star():
         if altitude != tele_altitude:
             self.update()
-        elif azimuth != tele_azimuth:
+        elif azimuth !- tele_azimuth:
             self.update()
 
     def AWSD_control():
         key == click.getchar()
-        if key == 'a':
+         if key == 'a':
              motor1.set_direction(1)
              motor1.set_speed(1)
         if key == 'd':
