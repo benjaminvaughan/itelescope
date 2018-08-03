@@ -22,34 +22,36 @@ class Telescope():
         self.Calculations = Calculations()    
     def set_azimuth(self, target_azimuth):
         self.azimuth = Calculations.convert_to_azimuth(1, self.declination, self.right_ascension, self.latitude)
-        return self.azimuth         
-        print('azimuth set to', self.azimuth)
+        self.Azimuth = float(self.azimuth)
+        return self.Azimuth         
+        print('azimuth set to', Azimuth)
 
     def set_altitude(self, target_altitude):
-        self.altitude = Calculations.convert_to_altitude(self.declination, self.right_ascension, self.latitude)
-        return self.altitude    
-        print('altitude set to', self.altitude)
+        self.altitude = Calculations.convert_to_altitude(1, self.declination, self.right_ascension, self.latitude)
+        self.Altitude = float(self.altitude)
+        return self.Altitude
+        print('altitude set to', Altitude)
 
     def get_gast(self):
         gast = Calculations.GAST()
         return gast
     
     def get_altitude(self):
-        self.degrees = altitude_encoder.get_degrees()
-        self.tele_altitude = calculations.convert_degrees(self.degrees)
+        self.degrees = self.altitude_encoder.get_degrees()
+        self.tele_altitude = Calculations.convert_degrees(1, self.degrees)
         return self.tele_altitude
 
 
     def get_azimuth(self):
-        self.degrees = azimuth_encoder.get_degrees()
-        self.tele_azimuth = calculations.convert_degrees(self.degrees)
+        self.degrees = self.azimuth_encoder.get_degrees()
+        self.tele_azimuth = Calculations.convert_degrees(1, self.degrees)
         return self.tele_azimuth
         
     def update(self):
-        self.current_altitude = self.altitude_encoder.print_degrees()
-        altitude_error = self.target_altitude - self.current_altitude
-        self.current_azimuth = self.azimuth_encoder.print_degrees()
-        azimuth_error = self.target_azimuth - self.current_azimuth
+        self.current_altitude = self.altitude_encoder.get_degrees()
+        altitude_error = self.altitude - float(self.current_altitude)
+        self.current_azimuth = self.azimuth_encoder.get_degrees()
+        azimuth_error = self.azimuth  - float(self.current_azimuth)
         if azimuth_error >0:
             print('positive azimuth')
             azimuth_motor.set_direction(1)
