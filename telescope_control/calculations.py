@@ -1,10 +1,11 @@
 from encoder_class import Encoder
 import datetime
 import math
-import numpy
+import numpy as np
 class Calculations():
-    
- #   current_time = datetime.datetime.now()
+    def __init__(self):
+        self.LHA = LHA = 40.0  
+#   current_time = datetime.datetime.now()
  #   year = current_time.year
  #   month = current_time.month
  #   day = current_time.day
@@ -62,13 +63,15 @@ class Calculations():
         arguments: floats
         returns: degrees as a float
         """
-        target_altitude = arcsin(cos(self.LHA)*cos(declination)*cos(latitude)+ sin(declination)*cos(self.LHA))
-
+        target_altitude = np.arcsin(np.cos(40)*np.cos(declination)*np.cos(latitude)+ np.sin(declination)*np.cos(40))
+        target_altitude = float(target_altitude)
+        return target_altitude
     def convert_to_azimuth(self, declination, right_ascension, latitude):
         """converts right ascension and declination into latitude
         arguments: floats
         returns: degrees as a float
         """
 
-        target_azimuth = arctan((-1*sin(self.LHA))/(tan(declination)*cos(latitude)-sin(latitude)*cos(LHA)))
-        
+        target_azimuth = np.arctan((-1*np.sin(40))/(np.tan(declination)*np.cos(latitude)-np.sin(latitude)*np.cos(40)))
+        target_azimuth = float(target_azimuth)
+        return target_azimuth       
