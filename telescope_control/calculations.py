@@ -57,21 +57,21 @@ class Calculations():
     def local_hour_angle(self, right_ascension, longitude):
         LHA = (self.gast - right_ascension)*15- longitude
         return LHA
-    def convert_to_altitude(self, declination, right_ascension, latitude):
+    def convert_to_altitude(self, declination, right_ascension, Latitude):
         """ 
         converts right ascension and declination into altitude
         arguments: floats
         returns: degrees as a float
         """
-        target_altitude = np.arcsin(np.cos(40)*np.cos(declination)*np.cos(latitude)+ np.sin(declination)*np.cos(40))
+        target_altitude = np.arcsin(np.cos(40)*np.cos(declination)*np.cos(Latitude)+ np.sin(declination)*np.cos(40))
         target_altitude = float(target_altitude)
         return target_altitude
-    def convert_to_azimuth(self, declination, right_ascension, latitude):
+    def convert_to_azimuth(self, declination, right_ascension, Latitude):
         """converts right ascension and declination into latitude
         arguments: floats
         returns: degrees as a float
         """
 
-        target_azimuth = np.arctan((-1*np.sin(40))/(np.tan(declination)*np.cos(latitude)-np.sin(latitude)*np.cos(40)))
+        target_azimuth = np.arctan((-1*np.sin(40))/(np.tan(declination)*np.cos(latitude)-np.sin(Latitude)*np.cos(40)))
         target_azimuth = float(target_azimuth)
         return target_azimuth       
