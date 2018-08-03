@@ -9,18 +9,23 @@ from calculations import Calculations
 
 if __name__ == '__main__':
     telescope = Telescope()
-    print('enter azimuth')
+    print('enter latitude')
+    line = input()
+    latitude = float(line)
+    telescope.get_latitude(latitude)
+    print('enter right_ascension')
     line = input()
     degrees = float(line)
     print('you entered %f' % degrees)
-    telescope.set_azimuth(degrees)
-    print('enter azimuth')
+    telescope.set_right_ascension(degrees)
+    print('enter declination')
     line = input()
     degrees = float(line)
-    telescope.set_altitude(degrees)
+    telescope.set_declination(degrees)
+    telescope.set_altitude()
+    telescope.set_azimuth()
     telescope.get_azimuth()
     telescope.get_altitude()
-
-While True:
-    telescope.update()
-    time.sleep(1)
+    while True:
+        telescope.update()
+        time.sleep(1)
