@@ -72,11 +72,11 @@ class Calculations():
         return result
 
     def local_hour_angle(self, right_ascension, longitude):        
-        LHA = (self.gast - right_ascension)*15- longitude
-        return LHA
+        self.LHA = (self.gast - right_ascension)*15- longitude
+        return self.LHA
 
     def convert_local_hour_angle(self):
-        lha_rad = Calculations.hours_to_radians(LHA)
+        self.lha_rad = angle_conversions.hours_to_radians(self.LHA)
         return lha_rad
 
     def convert_to_altitude(self, declination, right_ascension, latitude, LHA):

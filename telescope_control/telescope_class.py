@@ -48,6 +48,7 @@ class Telescope():
 
     def get_local_hour_angle(self):
         LHA = self.Calculations.local_hour_angle(self.Longitude, self.right_ascension)
+        self.LHA = LHA
         return LHA 
    
     def get_altitude(self):
