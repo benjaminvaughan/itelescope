@@ -7,7 +7,6 @@ import datetime
 import sys
 from calculations import Calculations
 
-
 if __name__ == '__main__':
     telescope = Telescope()
     print('enter azimuth')
@@ -21,4 +20,7 @@ if __name__ == '__main__':
     telescope.set_altitude(degrees)
     telescope.get_azimuth()
     telescope.get_altitude()
+
+While True:
     telescope.update()
+    time.sleep(1)

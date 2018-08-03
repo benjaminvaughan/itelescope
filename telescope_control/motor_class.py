@@ -9,36 +9,37 @@ class Motor():
             pi = pigpio.pi()
         self.pi = pi
         self.dir_pin = dir_pin
+        print('dir', dir_pin)
         self.step_pin = step_pin
         pi.set_mode(dir_pin, pigpio.OUTPUT)
         pi.set_mode(step_pin, pigpio.OUTPUT)
-        mode = (mode1,mode2,mode3)
-        resolution =  {'Full':(0,0,0),
+        self.mode = (mode1,mode2,mode3)
+        self.resolution =  {'Full':(0,0,0),
 	   'Half':(1,0,0),
 	   '1/4':(0,1,0),
 	   '1/8':(1,1,0),
 	   '1/16':(0,0,1),
 	   '1/32':(1,0,1)}
 
-    def a32_microsteps():
+    def a32_microsteps(self):
         for i in range(3):
-            pi.write(mode[i], resolution['1/32'][i])
+            self.pi.write(self.mode[i], self.resolution['1/32'][i])
 
-    def a16_microsteps():
+    def a16_microsteps(self):
         for i in range(3):
-            pi.write(mode[i], resolution['1/16'][i])
+            self.pi.write(self.mode[i], self.resolution['1/16'][i])
 
-    def a8_microsteps():
+    def a8_microsteps(self):
         for i in range(3):
-            pi.write(mode[i], resolution['1/8'][i])
+            self.pi.write(self.mode[i], self.resolution['1/8'][i])
 
-    def a4_microsteps():
+    def a4_microsteps(self):
         for i in range(3):
-            pi.write(mode[i], resolution['1/4'][i])
+            self.pi.write(self.mode[i], self.resolution['1/4'][i])
 
-    def full_step():
+    def full_step(self):
         for i in range(3):
-            pi.write(mode[i], resolution['Full step'][i])
+            self.pi.write(self.mode[i], self.resolution['Full'][i])
         
 
     def set_speed(self, speed):
@@ -59,7 +60,7 @@ class Motor():
             self.set_frequency_dutycycle(128, 1000)
         elif speed == 6:
             self.full_step()
-            self.set_frequency_dutycycle(128, 1000)
+            self.set_frequency_dutycycle(128, 500)
         else:
             print('invalid speed', speed)
 
@@ -72,13 +73,14 @@ class Motor():
 
     def stopping_motor(self):
         self.pi.set_PWM_dutycycle(self.step_pin, 0)
-        self.pi.stop()
+        #self.pi.stop()
         
     def creating_wave(self, frequency):
-        self.pi.wave_create(self.step_pin, self.step_pin, 1.0 // frequency)
+        self.pi.wave_create(1.0 / frequency)
 
     def one_step(self):
         self.pi.wave_send_once(1)
+
     """
     def motor_control(self, clockwise_key1, counter_clockwise_key1, clockwise_key2, counter_clockwise_key2):
         while True:
@@ -89,7 +91,7 @@ class Motor():
                 self.set_speed(128, 1000, 1)
             if key == 'counter_clockwise_key1':
                 self.set_speed(128, 1000, 0)
-            if len(key) = 3: #arrow keys: 66 down,  67 left, 68 right, 65 up
+            if len(key) == 3: #arrow keys: 66 down,  67 left, 68 right, 65 up
                 key = ord(key[2])
                 if key == clockwise_key2:
                     motor.set_speed(128, 1000, 1)
@@ -97,6 +99,7 @@ class Motor():
                 if key == counter_clockwise_key2:
                     motor.set_speed(128, 1000, 0)
                     time.sleep(0.1)
-   """                
+    """
+                
         
         

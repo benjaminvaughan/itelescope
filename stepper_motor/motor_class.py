@@ -25,21 +25,21 @@ class Motor():
         for i in range(3):
             self.pi.write(self.mode[i], self.resolution['1/32'][i])
 
-    def a16_microsteps():
+    def a16_microsteps(self):
         for i in range(3):
             self.pi.write(self.mode[i], self.resolution['1/16'][i])
 
-    def a8_microsteps():
+    def a8_microsteps(self):
         for i in range(3):
             self.pi.write(self.mode[i], self.resolution['1/8'][i])
 
-    def a4_microsteps():
+    def a4_microsteps(self):
         for i in range(3):
             self.pi.write(self.mode[i], self.resolution['1/4'][i])
 
-    def full_step():
+    def full_step(self):
         for i in range(3):
-            self.pi.write(self.mode[i], self.resolution['Full step'][i])
+            self.pi.write(self.mode[i], self.resolution['Full'][i])
         
 
     def set_speed(self, speed):
@@ -60,7 +60,7 @@ class Motor():
             self.set_frequency_dutycycle(128, 1000)
         elif speed == 6:
             self.full_step()
-            self.set_frequency_dutycycle(128, 1000)
+            self.set_frequency_dutycycle(128, 500)
         else:
             print('invalid speed', speed)
 
