@@ -4,7 +4,7 @@
 
 import math
 
-class angle_conversions(self):
+class angle_conversions():
 
     def __init__(self):
         self.radians = 0

@@ -2,40 +2,57 @@ from encoder_class import Encoder
 import datetime
 import math
 import numpy as np
+from angle_conversions import angle_conversions
+
 class Calculations():
     def __init__(self):
-        self.LHA = LHA = 40.0  
-#   current_time = datetime.datetime.now()
- #   year = current_time.year
- #   month = current_time.month
- #   day = current_time.day
- #   ut_current_time = datetime.datetime.utcnow()
- #   ut_hours = ut_current_time.hours
- #   ut_minutes = ut_current_time.minutes
- #   ut_minutes_fraction = ut_minutes / 60.0
- #   UT = ut_hours + ut_minutes_fraction
- #   JD_midnight = 367*year - 7*(year+(month+9/12))*4 + 275*month/9 + 1721013.5 + UT/24
- #   D = JD_mightnit - 2451545.0
-
+        self.datetime = datetime
+        self.current_time = datetime.datetime.now()
+        self.year = self.current_time.year
+        self.month = self.current_time.month
+        self.day = self.current_time.day
+        self.ut_current_time = self.datetime.datetime.utcnow()
+        self.ut_hours = self.ut_current_time.hour
+        self.ut_minutes = self.ut_current_time.minute
+        self.ut_minutes_fraction = self.ut_minutes / 60.0
+        self.UT = self.ut_hours + self.ut_minutes_fraction
 
     def get_julian_date(self):
-       JD_midnight = 367*year - 7*(year+(month+9/12))*4 + 275*month/9 + 1721013.5 + UT/24
+       JD_midnight = 367*self.year - 7*(self.year+(self.month+9/12))*4 + 275*self.month/9 + 1721013.5 + self.UT/24
+       self.D = JD_midnight - 2451545.0
+       return self.D
+
     def get_GMST(self):
-       GMST = 6.697374558 + 0.06570982441908 * D + 1.00273790935
-    
+       GMST = 6.697374558 + 0.06570982441908 * self.D + 1.00273790935
+       return GMST
+   
     def GAST(self):
-        gast = self.GMST + self.eqeq
+        self.get_julian_date()
+        self.longitude_of_ascending_moon()
+        self.mean_longitude_of_sun()
+        self.obliquity()
+        self.nutation()
+        self.gast = self.get_GMST() + self.equation_of_equinoxes()
+        return self.gast
+   
+    def obliquity(self):
+        self.obliquity =  23.4393 - 0.0000004 * self.D
+        return self.obliquity
 
     def nutation(self):
-        n = -0.000319 * sin(moon) - 0.000024 * sin(2*sun)
+        self.n = -0.000319 * np.sin(self.moon) - 0.000024 * np.sin(2*self.sun)
+        return self.n  
     def longitude_of_ascending_moon(self):
-        moon = 125.04 - 0.052954 * D
+        self.moon = 125.04 - 0.052954 * self.D
+        return self.moon
 
     def mean_longitude_of_sun(self):
-        sun = 280.47 + 0.98565 * D
+        self.sun = 280.47 + 0.98565 * self.D
+        return self.sun
 
     def equation_of_equinoxes(self):
-        eqeq = self.nutation *cos(self.obliquity)
+        self.eqeq = self.n * np.cos(self.obliquity)
+        return self.eqeq
 
     def G_M_S_T(self):
         gmst = 18.697374558 + 24.0657098244
@@ -54,24 +71,47 @@ class Calculations():
         result = ( 'degrees' + '*' + 'arcminutes' + "'" + 'arcseconds')
         return result
 
-    def local_hour_angle(self, right_ascension, longitude):
+    def local_hour_angle(self, right_ascension, longitude):        
         LHA = (self.gast - right_ascension)*15- longitude
         return LHA
-    def convert_to_altitude(self, declination, right_ascension, Latitude):
+
+    def convert_local_hour_angle(self):
+        lha_rad = Calculations.hours_to_radians(LHA)
+        return lha_rad
+
+    def convert_to_altitude(self, declination, right_ascension, latitude, LHA):
         """ 
         converts right ascension and declination into altitude
         arguments: floats
         returns: degrees as a float
         """
-        target_altitude = np.arcsin(np.cos(40)*np.cos(declination)*np.cos(Latitude)+ np.sin(declination)*np.cos(40))
-        target_altitude = float(target_altitude)
-        return target_altitude
-    def convert_to_azimuth(self, declination, right_ascension, Latitude):
+        self.convert_local_hour_angle()
+        self.convert_latitude(latitude)
+        self.convert_declination(declination)
+        altitude1 = -1*np.sin(self.lha_rad)
+        altitude2 = np.tan(self.declination_rad)*np.cos(self.lat_rad)
+        altitude3 = np.sin(self.lat_rad)*np.cos(self.lha_rad)
+        altitude4 = altitude2 - altitude3
+        altitude5 = altitude1/altitude4
+        target_altitude = np.arctan(altitude5)
+
+    def convert_latitude(self, latitude):          
+        self.lat_rad = angle_conversions.degreees_to_radians(latitude)
+        return self.lat_rad
+    def convert_declination(self, declination):       
+        self.declination_rad = angle_conversions.degrees_to_radians(declination)
+        return self.declination_rad
+   
+    def convert_to_azimuth(self, declination, right_ascension, Latitude, LHA):
         """converts right ascension and declination into latitude
         arguments: floats
         returns: degrees as a float
         """
-
-        target_azimuth = np.arctan((-1*np.sin(40))/(np.tan(declination)*np.cos(latitude)-np.sin(Latitude)*np.cos(40)))
+        self.convert_declination(declination)
+        self.convert_latitude(latitude)
+        self.convert_local_hour_angle()
+        azimuth1 = np.cos(self.lha_rad)*np.cos(self.declination_rad)*np.cos(self.lat_rad)
+        azimuth2 = np.sin(self.declination_rad)*np.sin(self.lat_rad)
+        target_azimuth = np.arcsin(azimuth1 + azimuth2)
         target_azimuth = float(target_azimuth)
         return target_azimuth       

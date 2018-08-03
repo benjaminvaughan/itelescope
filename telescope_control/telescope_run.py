@@ -9,6 +9,10 @@ from calculations import Calculations
 
 if __name__ == '__main__':
     telescope = Telescope()
+    print('enter longitude')
+    line = input()
+    longitude = float(line)
+    telescope.get_longitude(longitude)
     print('enter latitude')
     line = input()
     latitude = float(line)
@@ -21,6 +25,8 @@ if __name__ == '__main__':
     print('enter declination')
     line = input()
     degrees = float(line)
+    telescope.get_gast()
+    telescope.get_local_hour_angle()
     telescope.set_declination(degrees)
     telescope.set_altitude()
     telescope.set_azimuth()
