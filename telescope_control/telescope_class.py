@@ -7,6 +7,7 @@ import sys
 from calculations import Calculations
 import math
 import numpy
+import click
 #used for talking with meadle LX200 Protocol
 
 class Telescope():
@@ -16,8 +17,14 @@ class Telescope():
         self.altitude_motor = Motor(24, 23, 26, 8, 7, pi)
         self.azimuth_encoder = Encoder(20, 21, 12, 2)
         self.azimuth_motor = Motor(10, 9 , 17, 27, 22, pi)
+<<<<<<< HEAD
         self.Calculations = Calculations()    
 
+=======
+        self.Calculations = Calculations()
+        
+        
+>>>>>>> 6145f6097023b08b5f3576d6970976711d4cf13c
     def set_azimuth(self):
         self.azimuth = self.Calculations.convert_to_azimuth( self.declination, self.right_ascension, self.Latitude, self.LHA)
         return self.azimuth         
@@ -116,13 +123,22 @@ class Telescope():
         if altitude_error >= 700:
             self.altitude_motor.set_speed(6)
 
+<<<<<<< HEAD
     def run_go_to_star():
+=======
+    def run_go_to_star(self):
+>>>>>>> 6145f6097023b08b5f3576d6970976711d4cf13c
         if altitude != tele_altitude:
             self.update()
         elif azimuth != tele_azimuth:
             self.update()
 
+<<<<<<< HEAD
     def AWSD_control():
+=======
+    def AWSD_control(self):
+       speed = 0
+>>>>>>> 6145f6097023b08b5f3576d6970976711d4cf13c
        while True:
         key = click.getchar()
         if len(key) == 1:
@@ -144,7 +160,11 @@ class Telescope():
                 self.azimuth_motor.set_speed(speed)
             if key == 's':
                 self.azimuth_motor.set_direction(0)
+<<<<<<< HEAD
                 self.azimuth_motor.set_speed(speed) key == click.getchar()
+=======
+                self.azimuth_motor.set_speed(speed)
+>>>>>>> 6145f6097023b08b5f3576d6970976711d4cf13c
 
             if len(key) == 3:
                 key = ord(key[2])
