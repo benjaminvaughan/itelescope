@@ -10,14 +10,15 @@ class Telescope:
         return "01* 02"
 
     def get_declination(self):
-        target_ra = "0*2"
+        target_ra = "01*02"
         return target_ra
 
     def get_target_declination(self):
         return "01*02"
 
     def get_right_ascension(self):
-        return "01*02"
+        RA = 123
+        strftime(%H:%M)
     
     def get_longitude(self):
         return "01*02"
