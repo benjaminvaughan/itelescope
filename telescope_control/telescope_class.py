@@ -122,38 +122,47 @@ class Telescope():
             self.update()
 
     def AWSD_control():
-        key == click.getchar()
-        if key == 'a':
-             motor1.set_direction(1)
-             motor1.set_speed(1)
-        if key == 'd':
-            motor1.set_direction(0)
-            motor1.set_speed(1)
-        if key == 'w':
-            motor2.set_direction(1)
-            motor2.set_speed(1)
-        if key -- 's':
-            motor2.set_direction(0)
-            motor2.set_speed(1)
+       while True:
+        key = click.getchar()
+        if len(key) == 1:
+            if key >= '1' and key <= '9':
+                speed = int(key)
+                print('speed %d %d' % (speed, ord(key)))
+            if key == 'q':
+                self.altitude_motor.stopping_motor()
+                self.azimuth_motor.stopping_motor()
+                break
+            if key == 'a':
+                self.altitude_motor.set_direction(1)
+                self.altitude_motor.set_speed(speed)
+            if key == 'd':
+                self.altitude_motor.set_direction(0)
+                self.altitude_motor.set_speed(speed)
+            if key == 'w':
+                self.azimuth_motor.set_direction(1)
+                self.azimuth_motor.set_speed(speed)
+            if key == 's':
+                self.azimuth_motor.set_direction(0)
+                self.azimuth_motor.set_speed(speed) key == click.getchar()
 
-        if len(key) == 3:
-            key = ord(key[2])
-            if key == 66: #down
-                motor1.stopping_motor()
-                motor1.set_direction(0)
-                motor1.one_step()
-            if key == 65: #up
-                motor1.stopping_motor()
-                motor1.set_direction(1)
-                motor1.one_step
-            if key == 68: #right
-                motor2.stopping_motor()
-                motor2.set_direction(0)
-                motor2.one_step
-            if key == 67: #left
-                motor2.stopping_motor()
-                motor2.set_direction(1)
-                motor2.one_step
+            if len(key) == 3:
+                key = ord(key[2])
+                if key == 66: #down
+                    motor1.stopping_motor()
+                    motor1.set_direction(0)
+                    motor1.one_step()
+                if key == 65: #up
+                    motor1.stopping_motor()
+                    motor1.set_direction(1)
+                    motor1.one_step
+                if key == 68: #right
+                    motor2.stopping_motor()
+                    motor2.set_direction(0)
+                    motor2.one_step
+                if key == 67: #left
+                    motor2.stopping_motor()
+                    motor2.set_direction(1)
+                    motor2.one_step
             
         
 def get_utc_offset_str():
