@@ -17,8 +17,9 @@ class Telescope():
         self.altitude_motor = Motor(24, 23, 26, 8, 7, pi)
         self.azimuth_encoder = Encoder(20, 21, 12, 2)
         self.azimuth_motor = Motor(10, 9 , 17, 27, 22, pi)
-        self.Calculations = Calculations()    
-
+        self.Calculations = Calculations()
+        
+        
     def set_azimuth(self):
         self.azimuth = self.Calculations.convert_to_azimuth( self.declination, self.right_ascension, self.Latitude, self.LHA)
         return self.azimuth         
