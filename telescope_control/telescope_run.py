@@ -10,15 +10,22 @@ import click
 
 if __name__ == '__main__':
     telescope = Telescope()
-
-def pick_mode()
     print('enter mode you would like to use')
-    line = input()
-    if line == 'mode2':
-        print('you are now running manual mode')
-    if line == 'mode1':
-        print('you are now running goto mode')
-        telescope = Telescope()
+    key = click.getchar()
+    telescope.AWSD_control.py()
+    
+    if key == 'c':
+        print('you are now in callibration mode')
+        mode = callibration
+        return mode
+        print('enter declination of star')
+        line = input()
+        star_declination = float(line)
+        telescope.set_star_declination(star_declination)
+        print('enter right ascension of star')
+        line = input()
+        star_right_ascension = float(line)
+        telescope.set_star_right_ascension(star_right_ascension)
         print('enter longitude')
         line = input()
         longitude = float(line)
@@ -27,52 +34,39 @@ def pick_mode()
         line = input()
         latitude = float(line)
         telescope.get_latitude(latitude)
+        telescope.get_gast()   
+        telescope.set_declination(degrees)
+        telescope.get_local_hour_angle()
+        sudo_altitude_callibration()
+        sudo_azimuth_callibration()
+    if key == 'f':
+        print('you are now running manual mode')
+        mode = manual
+        return mode
+    if key == 'g':
+        print('you are now running goto mode')
+        mode = goto
+        return mode
         print('enter right_ascension')
         line = input()
         degrees = float(line)
-        print('you entered %f' % degrees)
         telescope.set_right_ascension(degrees)
         print('enter declination')
         line = input()
         degrees = float(line)
-        telescope.get_gast()   
         telescope.set_declination(degrees)
-        telescope.get_local_hour_angle()
         telescope.set_altitude()
         telescope.set_azimuth()
         telescope.get_azimuth()
         telescope.get_altitude()
-        while True:
-            telescope.update()
-            time.sleep(1)
-        telescope.AWSD_control()
-    if line == 'mode1':
-        print('you are now running goto mode')
-        goto_mode()
-def goto_mode()
-    print('enter longitude')
-    line = input()
-    longitude = float(line)
-    telescope.get_longitude(longitude)
-    print('enter latitude')
-    line = input()
-    latitude = float(line)
-    telescope.get_latitude(latitude)
-    print('enter right_ascension')
-    line = input()
-    degrees = float(line)
-    print('you entered %f' % degrees)
-    telescope.set_right_ascension(degrees)
-    print('enter declination')
-    line = input()
-    degrees = float(line)
-    telescope.get_gast()   
-    telescope.set_declination(degrees)
-    telescope.get_local_hour_angle()
-    telescope.set_altitude()
-    telescope.set_azimuth()
-    telescope.get_azimuth()
-    telescope.get_altitude()
-    while True:
-        telescope.update()
-        time.sleep(1)
+
+        if mode == goto:
+            while True:
+                telescope.run_go_to_star()
+                time.sleep(0.1)
+        elif mode == manual:
+            pass
+        elif mode == callibration:
+            pass
+       
+
