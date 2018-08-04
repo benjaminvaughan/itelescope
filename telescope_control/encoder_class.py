@@ -31,8 +31,9 @@ class Encoder():
     def call_back_z(self, pin, level, tick):
         self.position = 0
 
-    def print_degrees(self):
+    def get_degrees(self):
         print('encoder', self.encoder_id, self.degree)
+        return float(self.degree)
 
     def run_encoder(self):
         self.pi.callback(self.pin_a, 2, self.call_back_a)
