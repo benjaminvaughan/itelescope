@@ -16,6 +16,7 @@ class Calculations():
         self.ut_minutes = self.ut_current_time.minute
         self.ut_minutes_fraction = self.ut_minutes / 60.0
         self.UT = self.ut_hours + self.ut_minutes_fraction
+        self.angle_conversions = angle_conversions()
 
     def get_julian_date(self):
        JD_midnight = 367*self.year - 7*(self.year+(self.month+9/12))*4 + 275*self.month/9 + 1721013.5 + self.UT/24
@@ -55,8 +56,8 @@ class Calculations():
         return self.eqeq
 
     def G_M_S_T(self):
-        gmst = 18.697374558 + 24.0657098244
-
+        self.gmst = 18.697374558 + 24.0657098244
+        return self.gmst
 
     def convert_degrees(self, degrees):
         """
@@ -76,8 +77,8 @@ class Calculations():
         return self.LHA
 
     def convert_local_hour_angle(self):
-        self.lha_rad = angle_conversions.hours_to_radians(self.LHA)
-        return lha_rad
+        self.lha_rad = self.angle_conversions.degrees_to_radians(self.LHA)
+        return self.lha_rad
 
     def convert_to_altitude(self, declination, right_ascension, latitude, LHA):
         """ 
@@ -93,13 +94,16 @@ class Calculations():
         altitude3 = np.sin(self.lat_rad)*np.cos(self.lha_rad)
         altitude4 = altitude2 - altitude3
         altitude5 = altitude1/altitude4
-        target_altitude = np.arctan(altitude5)
+        target_altitude = math.atan2(altitude1,altitude4)
+        target_altitude = self.angle_conversions.radians_to_degrees(target_altitude)
+        return target_altitude
 
+ 
     def convert_latitude(self, latitude):          
-        self.lat_rad = angle_conversions.degreees_to_radians(latitude)
+        self.lat_rad = self.angle_conversions.degrees_to_radians(latitude)
         return self.lat_rad
     def convert_declination(self, declination):       
-        self.declination_rad = angle_conversions.degrees_to_radians(declination)
+        self.declination_rad = self.angle_conversions.degrees_to_radians(declination)
         return self.declination_rad
    
     def convert_to_azimuth(self, declination, right_ascension, Latitude, LHA):
@@ -108,10 +112,11 @@ class Calculations():
         returns: degrees as a float
         """
         self.convert_declination(declination)
-        self.convert_latitude(latitude)
+        self.convert_latitude(Latitude)
         self.convert_local_hour_angle()
         azimuth1 = np.cos(self.lha_rad)*np.cos(self.declination_rad)*np.cos(self.lat_rad)
         azimuth2 = np.sin(self.declination_rad)*np.sin(self.lat_rad)
-        target_azimuth = np.arcsin(azimuth1 + azimuth2)
+        target_azimuth = math.asin(azimuth1 + azimuth2)
         target_azimuth = float(target_azimuth)
+        target_azimuth = self.angle_conversions.radians_to_degrees(target_azimuth)  
         return target_azimuth       

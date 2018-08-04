@@ -14,12 +14,15 @@ class angle_conversions():
 
     def radians_to_degrees(self, radians):
         degrees = math.degrees(radians)
+        return degrees
 
     def degrees_to_radians(self, degrees):
         radians = math.radians(degrees)
-
+        return radians
+ 
     def hours_to_degrees(self, hours):
-        degrees = hours * 15.0
+        self.degrees = hours * 15.0
+        return self.degrees
 
     def degrees_to_hours(self, degrees):
         hours = degrees * 24.0 / 360.0
@@ -31,7 +34,8 @@ class angle_conversions():
         degrees = arcseconds / 3600.0
 
     def hours_to_radians(self, hours):
-        radians = self.degrees_to_radians(hours_to_degrees(hours))
+        self.radians = self.degrees_to_radians(self.hours_to_degrees(hours))
+        return self.radians
 
     def radians_to_hours(self, radians):
         hours = degrees_to_hours(radians_to_degrees(radians))

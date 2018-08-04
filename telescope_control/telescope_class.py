@@ -29,10 +29,11 @@ class Telescope():
     def set_declination(self, target_declination):
         self.declination = target_declination
         return self.declination
-
+ 
     def set_altitude(self):
         self.altitude = self.Calculations.convert_to_altitude( self.declination, self.right_ascension, self.Latitude, self.LHA)
         print('altitude set to', self.altitude)
+        return self.altitude
 
     def get_latitude(self, latitude):
         self.Latitude = latitude
@@ -65,7 +66,7 @@ class Telescope():
     def update(self):
         self.current_altitude = self.altitude_encoder.get_degrees()
         altitude_error = self.altitude - float(self.current_altitude)
-        print('goal altitude',  self.altitude)
+        print('goal altitude',  self.altitude, 'current altitude', self.current_altitude, 'difference in altitudes', altitude_error)
         self.current_azimuth = self.azimuth_encoder.get_degrees()
         azimuth_error = self.azimuth  - float(self.current_azimuth)
         print('goal azimuth', self.azimuth)
