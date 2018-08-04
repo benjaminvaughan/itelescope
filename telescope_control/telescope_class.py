@@ -7,6 +7,7 @@ import sys
 from calculations import Calculations
 import math
 import numpy
+import click
 #used for talking with meadle LX200 Protocol
 
 class Telescope():
@@ -116,13 +117,14 @@ class Telescope():
         if altitude_error >= 700:
             self.altitude_motor.set_speed(6)
 
-    def run_go_to_star():
+    def run_go_to_star(self):
         if altitude != tele_altitude:
             self.update()
         elif azimuth != tele_azimuth:
             self.update()
 
-    def AWSD_control():
+    def AWSD_control(self):
+       speed = 0
        while True:
         key = click.getchar()
         if len(key) == 1:
@@ -144,7 +146,7 @@ class Telescope():
                 self.azimuth_motor.set_speed(speed)
             if key == 's':
                 self.azimuth_motor.set_direction(0)
-                self.azimuth_motor.set_speed(speed) key == click.getchar()
+                self.azimuth_motor.set_speed(speed)
 
             if len(key) == 3:
                 key = ord(key[2])

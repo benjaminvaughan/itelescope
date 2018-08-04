@@ -9,13 +9,14 @@ from calculations import Calculations
 import click
 
 if __name__ == '__main__':
+    telescope = Telescope()
     print('enter mode you would like to use')
     line = input()
     if line == 'mode2':
         print('you are now running manual mode')
+        telescope.AWSD_control()
     if line == 'mode1':
         print('you are now running goto mode')
-        telescope = Telescope()
         print('enter longitude')
         line = input()
         longitude = float(line)
