@@ -33,7 +33,6 @@ class Encoder():
 
     def print_degrees(self):
         print('encoder', self.encoder_id, self.degree)
-        return degrees
 
     def run_encoder(self):
         self.pi.callback(self.pin_a, 2, self.call_back_a)
