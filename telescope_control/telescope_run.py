@@ -10,14 +10,12 @@ import click
 
 if __name__ == '__main__':
     telescope = Telescope()
-    print('enter mode you would like to use')
     key = click.getchar()
-    telescope.AWSD_control.py()
+    telescope.AWSD_control()
     
     if key == 'c':
         print('you are now in callibration mode')
-        mode = callibration
-        return mode
+        self.mode = callibration
         print('enter declination of star')
         line = input()
         star_declination = float(line)
@@ -41,12 +39,10 @@ if __name__ == '__main__':
         sudo_azimuth_callibration()
     if key == 'f':
         print('you are now running manual mode')
-        mode = manual
-        return mode
+        self.mode = manual
     if key == 'g':
         print('you are now running goto mode')
-        mode = goto
-        return mode
+        self.mode = goto
         print('enter right_ascension')
         line = input()
         degrees = float(line)
