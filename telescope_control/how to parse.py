@@ -19,7 +19,9 @@ class Telescope:
     def get_right_ascension(self):
         return "01*02"
     
-    def 
+    def get_target_ascension(self):
+        target = '01*02'
+        return target
     
 import time
 from datetime import datetime
@@ -80,12 +82,12 @@ while True:
         print('s' + get_utc_offset_str() + '#")
     elif line == ':GR#': #returns HH:MM.T# or HH:MM:SS#
         print('get telescope RA')
-        print('')
+        print('s' + telescope.get_right_ascension() + '#')
     elif line == ':Gr#': #returns HH:MM.T# or HH:MM:SS#
         print('get target RA')
-        print('s' + telescope.get_right_ascension() + '#')
+        print('s' + telescope.get_target_ascension() + '#')
     elif line == ':GS#': #returns HH:MM:SS#
-        print()
+        print('s' + )
         print('get sidereal time')
     elif line == ':Gg#':
         print('get site longitude')
