@@ -13,6 +13,7 @@ from keys import Keyboard
 if __name__ == '__main__':
     telescope = Telescope()
     keyboard = Keyboard()
+    angle_conversions = angle_conversions()
     mode = 'manual'
     while True:
         key = keyboard.getKey()
@@ -35,13 +36,15 @@ if __name__ == '__main__':
             print('enter declination of star in DD:MM:SS')
             line = input()
             star_declination = str(line)
-            star_declination = angle_calculations.degrees_to_degrees(star_declination)
+            star_declination = angle_conversions.degrees_to_degrees(star_declination)
             telescope.set_star_declination(star_declination)
+            print(star_declination)
             print('enter right ascension of star in HH:MM:SS')
             line = input()
             star_right_ascension = str(line)
             star_right_ascension = angle_conversions.hours_to_degrees2(star_right_ascension)
             telescope.set_star_right_ascension(star_right_ascension)
+            print(star_right_ascension)
             print('enter longitude')
             line = input()
             longitude = float(line)
@@ -51,10 +54,10 @@ if __name__ == '__main__':
             latitude = float(line)
             telescope.get_latitude(latitude)
             telescope.get_gast()   
-            telescope.set_declination(degrees)
-            telescope.get_local_hour_angle()
-            sudo_altitude_callibration()
-            sudo_azimuth_callibration()
+            telescope.set_declination(latitude)
+            telescope.star_LHA()
+            telescope.set_star_altitude()
+            telescope.set_star_azimuth()
         elif key == 'f':
             print('you are now running manual mode')
             mode = 'manual'
@@ -69,6 +72,7 @@ if __name__ == '__main__':
             line = input()
             degrees = float(line)
             telescope.set_declination(degrees)
+            telescope.get_local_hour_angle()
             telescope.set_altitude()
             telescope.set_azimuth()
             telescope.get_azimuth()

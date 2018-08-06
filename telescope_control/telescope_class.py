@@ -47,7 +47,7 @@ class Telescope():
         """
         used for callibration, sets the right ascension of the star in the scope
         """
-        self.s_right_ascension = star_rightascension
+        self.s_right_ascension = star_right_ascension
         return self.s_right_ascension
 
     def set_star_declination(self, star_declination):
@@ -56,29 +56,21 @@ class Telescope():
         """
         self.s_declination = star_declination
         return self.s_declination
- 
-    def sudo_azimuth_callibration(self):
-        """
-        used for callibration takes the declination and right ascension of the 
-        star in the scope and converts it into azimuth then tells the encoder 
-        class what degrees it should start at
-        """
-        self.set_azimuth_encoder = self.Calculations.convert_to_azimuth( self.declination, self.right_ascension, self.Latitude, self.LHA)
-        self.encoder_azimuth = self.set_azimuth_encoder
-        self.azimuth_encoder.degrees = self.encoder_azimuth
-        return self.azimuth_encoder.degrees
 
-    def sudo_altitude_callibration(self):
-        """
-        used for callibration takes the right ascension and declination of the 
-        star in the scope and converts it into altitude then tells the encoder
-        enoder what degrees it should star at
-        """
-        self.set_altitude_encoder = self.Calculations.convert_to_altitude( self.declination, self.right_ascension, self.Latitude, self.LHA)
-        self.encoder_altitude = self.set_altitude_encoder
-        self.altitude_encoder.degrees = self.encoder_altitude
-        return self.altitude_encoder.degrees
- 
+    def set_star_azimuth(self):
+        self.s_azimuth = self.Calculations.convert_to_azimuth(self.s_declination, self.s_right_ascension, self.Latitude, self.star_LHA)
+        print("star azimuth is", self.s_azimuth)
+        return self.s_azimuth
+
+    def set_star_altitude(self):
+        self.s_altitude = self.Calculations.convert_to_altitude(self.s_declination, self.s_right_ascension, self.Latitude, self.star_LHA)
+        print("star altitude is", self.s_altitude)
+        return self.s_altitude
+
+    def star_LHA(self):
+        star_LHA = self.Calculations.local_hour_angle(self.Longitude, self.s_right_ascension)
+        self.star_LHA = star_LHA
+        return star_LHA   
     def set_altitude(self):
         """
         sets the target altitude of the telescope, takes an input from 
@@ -196,9 +188,9 @@ class Telescope():
         telescope is not the same as the target altitude and if the azimuth
         is not the same as the target azimuth
         """
-        if altitude != tele_altitude:
+        if self.altitude != self.tele_altitude:
             self.update()
-        elif azimuth != tele_azimuth:
+        elif self.azimuth != self.tele_azimuth:
             self.update()
 
 
@@ -213,16 +205,21 @@ class Telescope():
             elif key == 'a':
                 self.altitude_motor.set_direction(1)
                 self.altitude_motor.set_speed(self.speed)
+                print('moving telescope left')
             elif key == 'd':
                 self.altitude_motor.set_direction(0)
                 self.altitude_motor.set_speed(self.speed)
+                print('moving telescope right')
             elif key == 'w':
                 self.azimuth_motor.set_direction(1)
                 self.azimuth_motor.set_speed(self.speed)
+                print('moving telescope up')
             elif key == 's':
                 self.azimuth_motor.set_direction(0)
                 self.azimuth_motor.set_speed(self.speed) 
+                print('moving telescope down')
             else:
+
                 return False
 
         elif len(key) == 3:

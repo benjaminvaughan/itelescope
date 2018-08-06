@@ -74,13 +74,13 @@ class angle_conversions():
         return arcseconds
 
     def hours_to_degrees2(self, hours):
-        hour_str = hour.split(':')
+        hour_str = hours.split(':')
         Hours = hour_str[0]
         Minutes = hour_str[1]
         Seconds = hour_str[2]
-        Minute_hours = minutes_to_hours(float(Minutes))
-        Second_hours = seconds_to_hours(float(Seconds))
-        Hours = float(Hour) + Minute_hours + Second_hours
+        Minute_hours = self.minutes_to_hours(float(Minutes))
+        Second_hours = self.seconds_to_hours(float(Seconds))
+        Hours = float(Hours) + Minute_hours + Second_hours
         return Hours
 
     def minutes_to_hours(self, minutes):
@@ -93,11 +93,13 @@ class angle_conversions():
 
     def degrees_to_degrees(self, degrees):
         degrees2 = degrees.split(':')
-        degrees_degrees = degrees[0]
-        degrees_minutes = degrees[1]
-        degrees_seconds = degrees[2]
-        degrees_minutes = degrees_minutes / 60.0
-        degrees_seconds = degrees_seconds / 3600.0
+        degrees_degrees = degrees2[0]
+        degrees_minutes = degrees2[1]
+        degrees_seconds = degrees2[2]
+        degrees_minutes = float(degrees_minutes) / 60.0
+        degrees_seconds = float(degrees_seconds) / 3600.0
         degrees2 = float(degrees_degrees) + degrees_minutes + degrees_seconds
+        print(degrees2)
         return degrees2
+
 
