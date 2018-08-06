@@ -45,7 +45,7 @@ class Motor():
     def set_speed(self, speed):
         if speed == 1:
             self.a32_microsteps()
-            self.set_frequency_dutycycle(128, 1000)
+            self.set_frequency_dutycycle(128, 1500)
         elif speed == 2:
             self.a32_microsteps()
             self.set_frequency_dutycycle(128, 2000)
