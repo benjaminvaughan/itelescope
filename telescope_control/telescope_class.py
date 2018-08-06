@@ -206,10 +206,11 @@ class Telescope():
         function that defines the interface for the manual control option
         """
         speed = 0
+        key = click.getchar()
         if len(key) == 1:
             if key >= '1' and key <= '9':
                 speed = int(key)
-                print('speed %d %d' % (speed))
+                print(speed)
             if key == 'a':
                 self.altitude_motor.set_direction(1)
                 self.altitude_motor.set_speed(speed)
@@ -246,29 +247,28 @@ class Telescope():
             
         
     def get_utc_offset_str():
-    """
+        """
     Returns a UTC offset string of the current time suitable for use in the
     most widely used timestamps (i.e. ISO 8601, RFC 3339). For example:
     10 hours ahead, 5 hours behind, and time is UTC: +10:00, -05:00, +00:00
-    """
+        """
+        # Calculate the UTC time difference in seconds.
 
-    # Calculate the UTC time difference in seconds.
+        timestamp = time.time()
+        time_now = datetime.fromtimestamp(timestamp)
+        time_utc = datetime.utcfromtimestamp(timestamp)
+        utc_offset_secs = (time_now - time_utc).total_seconds()
 
-         timestamp = time.time()
-         time_now = datetime.fromtimestamp(timestamp)
-         time_utc = datetime.utcfromtimestamp(timestamp)
-         utc_offset_secs = (time_now - time_utc).total_seconds()
+        # Flag variable to hold if the current time is behind UTC.
+        is_behind_utc = False
 
-    # Flag variable to hold if the current time is behind UTC.
-         is_behind_utc = False
+        # If the current time is behind UTC convert the offset
+        # seconds to a positive value and set the flag variable.
+        if utc_offset_secs < 0:
+            is_behind_utc = True
+            utc_offset_secs *= -1
 
-    # If the current time is behind UTC convert the offset
-    # seconds to a positive value and set the flag variable.
-    if utc_offset_secs < 0:
-        is_behind_utc = True
-        utc_offset_secs *= -1
-
-    # Build a UTC offset string suitable for use in a timestamp.
+        # Build a UTC offset string suitable for use in a timestamp.
 
         if is_behind_utc:
             pos_neg_prefix = "-"
