@@ -16,14 +16,9 @@ if __name__ == '__main__':
     
     if key == 'c':
         print('you are now in callibration mode')
-<<<<<<< HEAD
         mode = callibration
         return mode
         print('enter declination of star in DD:MM:SS')
-=======
-        self.mode = callibration
-        print('enter declination of star')
->>>>>>> ce4c342730acd49ff9977610a2ad4b018bada48d
         line = input()
         star_declination = str(line)
         star_declination = angle_calculations.degrees_to_degrees(star_declination)
