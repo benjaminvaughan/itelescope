@@ -9,11 +9,13 @@ from calculations import Calculations
 import click
 from angle_conversions import angle_conversions
 from keys import Keyboard
+from two_star_calibration import Two_Star_Calibration
 
 if __name__ == '__main__':
     telescope = Telescope()
     keyboard = Keyboard()
     angle_conversions = angle_conversions()
+    two_star_calibration = Two_Star_Calibration()
     mode = 'manual'
     while True:
         key = keyboard.getKey()
@@ -44,6 +46,7 @@ if __name__ == '__main__':
             star_right_ascension = str(line)
             star_right_ascension = angle_conversions.hours_to_degrees2(star_right_ascension)
             telescope.set_star_right_ascension(star_right_ascension)
+            print(star_right_ascension)
             print('enter longitude')
             line = input()
             longitude = float(line)

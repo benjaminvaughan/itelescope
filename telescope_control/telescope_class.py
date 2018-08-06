@@ -58,12 +58,12 @@ class Telescope():
         return self.s_declination
 
     def set_star_azimuth(self):
-        self.s_azimuth = self.Calculations.convert_to_azimuth(self.s_declination, self.s_right_ascension, self.Latitude, self.star_LHA)
+        s_azimuth = self.s_azimuth = self.Calculations.convert_to_azimuth(self.s_declination, self.s_right_ascension, self.Latitude, self.star_LHA)
         print("star azimuth is", self.s_azimuth)
         return self.s_azimuth
 
     def set_star_altitude(self):
-        self.s_altitude = self.Calculations.convert_to_altitude(self.s_declination, self.s_right_ascension, self.Latitude, self.star_LHA)
+        s_altitude = self.s_altitude = self.Calculations.convert_to_altitude(self.s_declination, self.s_right_ascension, self.Latitude, self.star_LHA)
         print("star altitude is", self.s_altitude)
         return self.s_altitude
 
