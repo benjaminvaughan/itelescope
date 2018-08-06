@@ -17,7 +17,8 @@ class Telescope():
         self.altitude_motor = Motor(24, 23, 26, 8, 7, pi)
         self.azimuth_encoder = Encoder(20, 21, 12, 2)
         self.azimuth_motor = Motor(10, 9 , 17, 27, 22, pi)
-        self.Calculations = Calculations()    
+        self.Calculations = Calculations()
+        self.speed = 0
 
     def set_azimuth(self):
         """
@@ -25,7 +26,7 @@ class Telescope():
         declination, returns in degrees right now
         """
         self.azimuth = self.Calculations.convert_to_azimuth( self.declination, self.right_ascension, self.Latitude, self.LHA)
-        return self.azimuth         
+        return self.azimuth
         print('azimuth set to', self.azimuth)
 
     def set_right_ascension(self, target_right_ascension):
@@ -55,7 +56,7 @@ class Telescope():
         """
         self.s_declination = star_declination
         return self.s_declination
-    
+ 
     def sudo_azimuth_callibration(self):
         """
         used for callibration takes the declination and right ascension of the 
@@ -77,7 +78,7 @@ class Telescope():
         self.encoder_altitude = self.set_altitude_encoder
         self.altitude_encoder.degrees = self.encoder_altitude
         return self.altitude_encoder.degrees
-    
+ 
     def set_altitude(self):
         """
         sets the target altitude of the telescope, takes an input from 
@@ -115,7 +116,7 @@ class Telescope():
         LHA = self.Calculations.local_hour_angle(self.Longitude, self.right_ascension)
         self.LHA = LHA
         return LHA 
-   
+ 
     def get_altitude(self):
         """
         function for finding the current altitude of the telescope
@@ -132,7 +133,7 @@ class Telescope():
         self.degrees = self.azimuth_encoder.get_degrees()
         self.tele_azimuth = self.Calculations.convert_degrees( self.degrees)
         return self.tele_azimuth
-        
+
     def update(self):
         """
         function that calculates the difference between the current
@@ -201,51 +202,52 @@ class Telescope():
             self.update()
 
 
-    def AWSD_control(self):
+    def AWSD_control(self, key):
         """
         function that defines the interface for the manual control option
         """
-        speed = 0
-        key = click.getchar()
         if len(key) == 1:
             if key >= '1' and key <= '9':
-                speed = int(key)
-                print(speed)
-            if key == 'a':
+                self.speed = int(key)
+                print(self.speed, '\r')
+            elif key == 'a':
                 self.altitude_motor.set_direction(1)
-                self.altitude_motor.set_speed(speed)
-            if key == 'd':
+                self.altitude_motor.set_speed(self.speed)
+            elif key == 'd':
                 self.altitude_motor.set_direction(0)
-                self.altitude_motor.set_speed(speed)
-            if key == 'w':
+                self.altitude_motor.set_speed(self.speed)
+            elif key == 'w':
                 self.azimuth_motor.set_direction(1)
-                self.azimuth_motor.set_speed(speed)
-            if key == 's':
+                self.azimuth_motor.set_speed(self.speed)
+            elif key == 's':
                 self.azimuth_motor.set_direction(0)
-                self.azimuth_motor.set_speed(speed) 
+                self.azimuth_motor.set_speed(self.speed) 
+            else:
+                return False
 
+        elif len(key) == 3:
+            key = ord(key[2])
+            if key == 66: #down
+                motor1.stopping_motor()
+                motor1.set_direction(0)
+                motor1.one_step()
+            elif key == 65: #up
+                motor1.stopping_motor()
+                motor1.set_direction(1)
+                motor1.one_step
+            elif key == 68: #right
+                motor2.stopping_motor()
+                motor2.set_direction(0)
+                motor2.one_step
+            elif key == 67: #left
+                motor2.stopping_motor()
+                motor2.set_direction(1)
+                motor2.one_step
+            else:
+                return False
+        return True
 
-
-            if len(key) == 3:
-                key = ord(key[2])
-                if key == 66: #down
-                    motor1.stopping_motor()
-                    motor1.set_direction(0)
-                    motor1.one_step()
-                if key == 65: #up
-                    motor1.stopping_motor()
-                    motor1.set_direction(1)
-                    motor1.one_step
-                if key == 68: #right
-                    motor2.stopping_motor()
-                    motor2.set_direction(0)
-                    motor2.one_step
-                if key == 67: #left
-                    motor2.stopping_motor()
-                    motor2.set_direction(1)
-                    motor2.one_step
-            
-        
+ 
     def get_utc_offset_str():
         """
     Returns a UTC offset string of the current time suitable for use in the
