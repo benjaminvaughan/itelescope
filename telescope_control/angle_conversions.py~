@@ -91,13 +91,3 @@ class angle_conversions():
         hours = seconds / 3600.0
         return hours
 
-    def degrees_to_degrees(self, degrees):
-        degrees2 = degrees.split(':')
-        degrees_degrees = degrees[0]
-        degrees_minutes = degrees[1]
-        degrees_seconds = degrees[2]
-        degrees_minutes = degrees_minutes / 60.0
-        degrees_seconds = degrees_seconds / 3600.0
-        degrees2 = float(degrees_degrees) + degrees_minutes + degrees_seconds
-        return degrees2
-

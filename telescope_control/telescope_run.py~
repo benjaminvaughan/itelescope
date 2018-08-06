@@ -7,7 +7,6 @@ import datetime
 import sys
 from calculations import Calculations
 import click
-from angle_conversions import angle_conversions
 
 if __name__ == '__main__':
     telescope = Telescope()
@@ -19,15 +18,13 @@ if __name__ == '__main__':
         print('you are now in callibration mode')
         mode = callibration
         return mode
-        print('enter declination of star in DD:MM:SS')
+        print('enter declination of star')
         line = input()
-        star_declination = str(line)
-        star_declination = angle_calculations.degrees_to_degrees(star_declination)
+        star_declination = float(line)
         telescope.set_star_declination(star_declination)
         print('enter right ascension of star in HH:MM:SS')
         line = input()
-        star_right_ascension = str(line)
-        star_right_ascension = angle_conversions.hours_to_degrees2(star_right_ascension)
+        star_right_ascension = float(line)
         telescope.set_star_right_ascension(star_right_ascension)
         print('enter longitude')
         line = input()
