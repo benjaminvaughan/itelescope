@@ -19,7 +19,7 @@ class Telescope():
         self.azimuth_motor = Motor(10, 9 , 17, 27, 22, pi)
         self.Calculations = Calculations()
         self.speed = 0
-
+         
     def set_azimuth(self):
         """
         sets the target azimuth after converting from right_ascension and 
@@ -54,15 +54,18 @@ class Telescope():
         """
         used for callibration, sets the declination of the star in the scope
         """
+        print('set_star_declination', self)
         self.s_declination = star_declination
         return self.s_declination
 
     def set_star_azimuth(self):
+        print('set_star_azimuth', self)
         s_azimuth = self.s_azimuth = self.Calculations.convert_to_azimuth(self.s_declination, self.s_right_ascension, self.Latitude, self.star_LHA)
         print("star azimuth is", self.s_azimuth)
         return self.s_azimuth
 
     def set_star_altitude(self):
+        print('set_star_altitude', self)
         s_altitude = self.s_altitude = self.Calculations.convert_to_altitude(self.s_declination, self.s_right_ascension, self.Latitude, self.star_LHA)
         print("star altitude is", self.s_altitude)
         return self.s_altitude
@@ -136,7 +139,7 @@ class Telescope():
         print('goal altitude',  self.altitude, 'current altitude', self.current_altitude, 'difference in altitudes', altitude_error)
         self.current_azimuth = self.azimuth_encoder.get_degrees()
         azimuth_error = self.azimuth  - float(self.current_azimuth)
-        print('goal azimuth', self.azimuth)
+        print('goal azimuth', self.azimuth, 'current azimuth', self.azimuth_encoder.get_degrees(), 'difference in azimuth', azimuth_error)
         if azimuth_error >0:
             print('positive azimuth')
             self.azimuth_motor.set_direction(1)

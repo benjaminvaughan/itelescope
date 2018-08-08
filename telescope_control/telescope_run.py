@@ -15,7 +15,7 @@ if __name__ == '__main__':
     telescope = Telescope()
     keyboard = Keyboard()
     angle_conversions = angle_conversions()
-    two_star_calibration = Two_Star_Calibration()
+    two_star_calibration = Two_Star_Calibration(telescope)
     mode = 'manual'
     while True:
         key = keyboard.getKey()
@@ -40,7 +40,7 @@ if __name__ == '__main__':
             star_declination = str(line)
             star_declination = angle_conversions.degrees_to_degrees(star_declination)
             telescope.set_star_declination(star_declination)
-            print(star_declination)
+            print(telescope.set_star_declination(star_declination))
             print('enter right ascension of star in HH:MM:SS')
             line = input()
             star_right_ascension = str(line)
@@ -56,7 +56,7 @@ if __name__ == '__main__':
             latitude = float(line)
             telescope.get_latitude(latitude)
             telescope.get_gast()   
-            telescope.set_declination(latitude)
+            telescope.set_star_declination(latitude)
             telescope.star_LHA()
             two_star_calibration.alt_offset()
             two_star_calibration.az_offset()
