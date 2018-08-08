@@ -13,6 +13,7 @@ class GPS_parse(object):
         self.string = self.line.split(",")
         self.name = self.string[0]
         if self.name == '$GPGGA':
+            print(self.name)
             Message_ID = self.string[0] #protocol header
             UTC_Position = self.string[1] #hhmmss.sss
             latitude = self.string[2] #dddmm.mmmm
@@ -21,9 +22,11 @@ class GPS_parse(object):
             E_or_W_indicator = self.string[5] #E = east, W = West
             return latitude, longitude, E_or_W_indicator, N_or_S_indicator, UTC_Position
         elif self.name == '$GPGSV':
+            print(self.name)
             satellites = self.string[3]
             return satellites
         elif self.name == '$GPRMC':
+            print(self.name)
             UTC3 = self.string[1]
             validity = self.string[2]
             if validity == 'V':
@@ -38,6 +41,7 @@ class GPS_parse(object):
             EorW3 = self.string[6]
             date = self.string[9]  
         elif self.name == '$GPGLL':
+            print(self.name)
             latitude2 = self.string[1]
             NorS2 = self.string[2]
             longitude2 = self.string[3]
@@ -46,17 +50,20 @@ class GPS_parse(object):
             VorNV = self.string[6]
             return latitude2, NorS2, longitude2, EorW2, UTC2, VorNV
         elif self.name == '$GPGSA':
-            mode = self.string[2]
-            if mode == '1':
+            print(self.name)
+            if self.line == self.name:
                 return False
-            elif mode == '2' or '3':
-                return True
-            else:
-                pass 
+                mode = self.string[2]
+                if mode == '1':
+                    return False
+                elif mode == '2' or '3':
+                    return True
+                else:
+                    return False 
         else:
-             return False          
+            return False          
   
 if __name__ == '__main__':
      gps_parse = GPS_parse()
      while True:
-        gps_parse.determining_name()
+        print(gps_parse.determining_name())
