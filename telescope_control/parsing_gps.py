@@ -23,19 +23,19 @@ class GPS_parse(object):
             return latitude, longitude, E_or_W_indicator, N_or_S_indicator, UTC_Position
         elif self.name == '$GPGSV':
             print(self.name)
-            satellites = self.string[3]
+            satellites = self.string[3] #finds the number of satellites
             return satellites
         elif self.name == '$GPRMC':
             print(self.name)
-            UTC3 = self.string[1]
-            validity = self.string[2]
+            UTC3 = self.string[1] 
+            validity = self.string[2] #checks the validity of the data
             if validity == 'V':
                 return False
             elif validity == 'A':
                 pass
             else:
                 return False
-            latitude3 = self.string[3]
+            latitude3 = self.string[3] 
             NorS3 = self.string[4]
             longitude3 = self.string[5]
             EorW3 = self.string[6]
@@ -47,13 +47,13 @@ class GPS_parse(object):
             longitude2 = self.string[3]
             EorW2 = self.string[4]
             UTC2 = self.string[5]
-            VorNV = self.string[6]
+            VorNV = self.string[6] #stands for valid or not valid
             return latitude2, NorS2, longitude2, EorW2, UTC2, VorNV
         elif self.name == '$GPGSA':
             print(self.name)
             if self.line == self.name:
                 return False
-                mode = self.string[2]
+                mode = self.string[2] #another check to see if data is valid
                 if mode == '1':
                     return False
                 elif mode == '2' or '3':

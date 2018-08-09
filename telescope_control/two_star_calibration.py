@@ -3,10 +3,8 @@ from telescope_class import Telescope
 
 class Two_Star_Calibration():
     def __init__(self, telescope=None):
-        self.star_alt_offset = star_alt_offset = 0
-        self.star_az_offset = star_az_offset = 0
-        star_alt_offset = []
-        star_az_offset = []
+        self.star_alt_offset = []
+        self.star_az_offset = []
         if telescope is None:
             telescope = Telescope()
         self.telescope = telescope

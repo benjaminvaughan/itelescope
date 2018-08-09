@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from motor_class import Motor
 from encoder_class import Encoder
 from telescope_class import Telescope
@@ -69,7 +71,7 @@ if __name__ == '__main__':
             print('enter right ascension of star 2 in HH:MM:SS')
             line = input()
             star_right_ascension = str(line)
-            star_right_ascension = angle_conversions.hours_to_Degrees2(star_Right_ascension)
+            star_right_ascension = angle_conversions.hours_to_degrees2(star_Right_ascension)
             telescope.set_star_right_ascension(star_right_ascension)
             telescope.star_LHA()
             two_star_calibration.alt_offset()
