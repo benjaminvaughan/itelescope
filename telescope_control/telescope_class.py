@@ -71,9 +71,9 @@ class Telescope():
         return self.s_altitude
 
     def star_LHA(self):
-        star_LHA = self.Calculations.local_hour_angle(self.Longitude, self.s_right_ascension)
-        self.star_LHA = star_LHA
-        return star_LHA   
+        star_lha = self.Calculations.local_hour_angle(self.Longitude, self.s_right_ascension)
+        self.star_lha = star_lha
+        return self.star_lha   
     def set_altitude(self):
         """
         sets the target altitude of the telescope, takes an input from 
@@ -180,10 +180,25 @@ class Telescope():
             self.altitude_motor.set_speed(3)
         if altitude_error >= 50:
             self.altitude_motor.set_speed(4)
-        if altitude_error >= 60:
-            self.altitude_motor.set_speed(5)
-        if altitude_error >= 70:
-            self.altitude_motor.set_speed(6)
+#        if altitude_error >= 60:
+#            self.altitude_motor.set_speed(5)
+#        if altitude_error >= 70:
+#            self.altitude_motor.set_speed(6)
+        self.altitude_error = altitude_error
+        self.azimuth_error = azimuth_error
+        return self.azimuth_error, self.altitude_error
+
+    def error_of_errors(self):
+        """
+        function that calculates the difference between the azimuth error and
+        the altitude error
+        """
+        e_of_e = self.azimuth_error - self.altitude_error
+        while 1:
+            if e_of_e >= 10:
+                self.altitude_motor.stopping_motor
+            else:
+                break    
 
     def run_go_to_star(self):
         """
@@ -193,9 +208,11 @@ class Telescope():
         """
         if self.altitude != self.tele_altitude:
             self.update()
+            self.error_of_errors
             print('slewing telescope')
         elif self.azimuth != self.tele_azimuth:
             self.update()
+            self.error_of_errors
             print('slewing telescope')
 
 

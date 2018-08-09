@@ -19,6 +19,8 @@ if __name__ == '__main__':
     angle_conversions = angle_conversions()
     two_star_calibration = Two_Star_Calibration(telescope)
     mode = 'manual'
+    telescope.azimuth_encoder.run_encoder()
+    telescope.altitude_encoder.run_encoder()
     while True:
         key = keyboard.getKey()
         if key is None: 
@@ -33,6 +35,8 @@ if __name__ == '__main__':
             continue
     
         if key == 'q':
+            telescope.altitude_motor.stopping_motor()
+            telescope.azimuth_motor.stopping_motor()
             break
         elif key == 'c':
             print('you are now in callibration mode')
@@ -60,8 +64,10 @@ if __name__ == '__main__':
             telescope.get_gast()   
             telescope.set_star_declination(latitude)
             telescope.star_LHA()
-            two_star_calibration.alt_offset()
-            two_star_calibration.az_offset()
+            telescope.set_star_azimuth()
+            telescope.set_star_altitude()
+            two_star_calibration.alt_offset_calibration()
+            two_star_calibration.az_offset_calibration()
             two_star_calibration.add_az_alt_offset()
             print('enter declination of star 2 in DD:MM:SS')
             line = input()
@@ -71,11 +77,13 @@ if __name__ == '__main__':
             print('enter right ascension of star 2 in HH:MM:SS')
             line = input()
             star_right_ascension = str(line)
-            star_right_ascension = angle_conversions.hours_to_degrees2(star_Right_ascension)
+            star_right_ascension = angle_conversions.hours_to_degrees2(star_right_ascension)
             telescope.set_star_right_ascension(star_right_ascension)
             telescope.star_LHA()
-            two_star_calibration.alt_offset()
-            two_star_calibration.az_offset()
+            telescope.set_star_altitude()
+            telescope.set_star_azimuth()
+            two_star_calibration.alt_offset_calibration()
+            two_star_calibration.az_offset_calibration()
             two_star_calibration.add_az_alt_offset()
         elif key == 'f':
             print('you are now running manual mode')

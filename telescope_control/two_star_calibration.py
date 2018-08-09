@@ -9,12 +9,14 @@ class Two_Star_Calibration():
             telescope = Telescope()
         self.telescope = telescope
 
-    def alt_offset(self):
-        self.alt_offset = self.telescope.altitude_encoder.degree - self.telescope.set_star_altitude()
+    def alt_offset_calibration(self):
+        self.alt_offset = self.telescope.altitude_encoder.degree - self.telescope.s_altitude
+        print(self.alt_offset, 'altitude offset') 
         return str(self.alt_offset)
     
-    def az_offset(self):
+    def az_offset_calibration(self):
         self.az_offset = self.telescope.azimuth_encoder.degree - self.telescope.set_star_azimuth()
+        print(self.az_offset, 'azimuth offset')
         return str(self.az_offset)
 
     def add_az_alt_offset(self):
