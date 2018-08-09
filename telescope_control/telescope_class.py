@@ -193,8 +193,10 @@ class Telescope():
         """
         if self.altitude != self.tele_altitude:
             self.update()
+            print('slewing telescope')
         elif self.azimuth != self.tele_azimuth:
             self.update()
+            print('slewing telescope')
 
 
     def AWSD_control(self, key):
