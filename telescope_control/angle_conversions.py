@@ -112,20 +112,21 @@ class angle_conversions():
                 return False
                 print('invalid format, please use the correct format')
             if len(degrees2) = 3:
-                degrees_degrees = degrees2[0]
-                degrees_minutes = degrees2[1]
-                degrees_seconds = degrees2[2]
-                float_deg_min = float(degrees_minutes)
-                float_deg_sec = float(degrees_seconds)
-                float_deg_deg
-                While 1:
-                    if float_deg_min != degrees2[1] or float_deg_sec != degrees[2] or float_deg_deg != degrees[0]:
-                        break
-                    else:
-                        pass
-                degrees_minutes = float(degrees_minutes) / 60.0
-                degrees_seconds = float(degrees_seconds) / 3600.0
-                degrees2 = float(degrees_degrees) + degrees_minutes + degrees_seconds
-                return degrees2
+                pass
+        degrees_degrees = degrees2[0]
+        degrees_minutes = degrees2[1]
+        degrees_seconds = degrees2[2]
+        float_deg_min = float(degrees_minutes)
+        float_deg_sec = float(degrees_seconds)
+        float_deg_deg
+        while 1:
+            if float_deg_min != degrees2[1] or float_deg_sec != degrees[2] or float_deg_deg != degrees[0]:
+                break
+            else:
+                pass
+        degrees_minutes = float(degrees_minutes) / 60.0
+        degrees_seconds = float(degrees_seconds) / 3600.0
+        degrees2 = degrees_degrees + degrees_minutes + degrees_seconds
+        return degrees2
 
 
