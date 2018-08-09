@@ -75,9 +75,23 @@ class angle_conversions():
 
     def hours_to_degrees2(self, hours):
         hour_str = hours.split(':')
+        while 1:
+            if len(hour_str == 3:
+                   pass
+            else:
+                   return False
+                   print('invalid input please use the correct format')
         Hours = hour_str[0]
+        float_hours = float(Hours)
         Minutes = hour_str[1]
+        float_min = float(Minutes)
         Seconds = hour_str[2]
+        float_sec = float(Seconds)
+        While 1:
+            if float_min != hour_str[1] or float_hours != hour_str[0] or float_sec != hour_str[2]:
+                break
+            else:
+                pass
         Minute_hours = self.minutes_to_hours(float(Minutes))
         Second_hours = self.seconds_to_hours(float(Seconds))
         Hours = float(Hours) + Minute_hours + Second_hours
@@ -93,13 +107,25 @@ class angle_conversions():
 
     def degrees_to_degrees(self, degrees):
         degrees2 = degrees.split(':')
-        degrees_degrees = degrees2[0]
-        degrees_minutes = degrees2[1]
-        degrees_seconds = degrees2[2]
-        degrees_minutes = float(degrees_minutes) / 60.0
-        degrees_seconds = float(degrees_seconds) / 3600.0
-        degrees2 = float(degrees_degrees) + degrees_minutes + degrees_seconds
-        print(degrees2)
-        return degrees2
+        while 1:
+            if len(degrees2) != 3:
+                return False
+                print('invalid format, please use the correct format')
+            if len(degrees2) = 3:
+                degrees_degrees = degrees2[0]
+                degrees_minutes = degrees2[1]
+                degrees_seconds = degrees2[2]
+                float_deg_min = float(degrees_minutes)
+                float_deg_sec = float(degrees_seconds)
+                float_deg_deg
+                While 1:
+                    if float_deg_min != degrees2[1] or float_deg_sec != degrees[2] or float_deg_deg != degrees[0]:
+                        break
+                    else:
+                        pass
+                degrees_minutes = float(degrees_minutes) / 60.0
+                degrees_seconds = float(degrees_seconds) / 3600.0
+                degrees2 = float(degrees_degrees) + degrees_minutes + degrees_seconds
+                return degrees2
 
 
