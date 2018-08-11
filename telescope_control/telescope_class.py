@@ -14,7 +14,7 @@ class Telescope():
     def __init__(self):
         pi = pigpio.pi()
         self.altitude_encoder = Encoder(16, 19, 26, 1)
-        self.altitude_motor = Motor(24, 23, 26, 8, 7, pi)
+        self.altitude_motor = Motor(24, 23, 25, 8, 7, pi)
         self.azimuth_encoder = Encoder(20, 21, 12, 2)
         self.azimuth_motor = Motor(10, 9 , 17, 27, 22, pi)
         self.Calculations = Calculations()
