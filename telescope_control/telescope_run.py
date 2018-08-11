@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+from parsing_gps import GPS_parse
 from motor_class import Motor
 from encoder_class import Encoder
 from telescope_class import Telescope
@@ -21,7 +21,14 @@ if __name__ == '__main__':
     mode = 'manual'
     telescope.azimuth_encoder.run_encoder()
     telescope.altitude_encoder.run_encoder()
-    while True:
+    gps_parse = GPS_parse()
+    while True:   
+        longlat = gps_parse.longitude_latitude()
+        if not longlat is None:
+            (longitude, latitude) = longlat
+            telescope.get_longitude(longitude)
+            telescope.get_latitude(latitude)
+            time.sleep(1)
         key = keyboard.getKey()
         if key is None: 
             if mode == 'goto':
