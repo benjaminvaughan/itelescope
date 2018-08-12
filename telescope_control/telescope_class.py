@@ -180,10 +180,10 @@ class Telescope():
             self.altitude_motor.set_speed(3)
         if altitude_error >= 50:
             self.altitude_motor.set_speed(4)
-#        if altitude_error >= 60:
-#            self.altitude_motor.set_speed(5)
-#        if altitude_error >= 70:
-#            self.altitude_motor.set_speed(6)
+        if altitude_error >= 60:
+            self.altitude_motor.set_speed(5)
+        if altitude_error >= 70:
+            self.altitude_motor.set_speed(6)
         self.altitude_error = altitude_error
         self.azimuth_error = azimuth_error
         return self.azimuth_error, self.altitude_error
