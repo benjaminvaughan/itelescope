@@ -129,11 +129,11 @@ class Telescope():
         self.tele_azimuth = self.Calculations.convert_degrees( self.degrees)
         return self.tele_azimuth
 
-    def update_azimuth(self):
+    def azimuth_update(self):
         """
         function that calculates the difference between the current
         and target azimuth/altitude and sets a speed accordingly
-        """)
+        """
         self.current_azimuth = self.azimuth_encoder.get_degrees()
         azimuth_error = self.azimuth  - float(self.current_azimuth)
         print('goal azimuth', self.azimuth, 'current azimuth', self.azimuth_encoder.get_degrees(), 'difference in azimuth', azimuth_error)
@@ -143,8 +143,8 @@ class Telescope():
         elif azimuth_error > 0:
             print('negative azimuth')
             self.azimuth_motor.set_direction(0)
-        altitude_error = abs(altitude_error)
         azimuth_error = abs(azimuth_error)
+        self.azimuth_error = azimuth_error
         if azimuth_error >= 4:
             self.azimuth_motor.stopping_motor()
         if azimuth_error >= 20:
@@ -160,9 +160,11 @@ class Telescope():
         self.azimuth_error = azimuth_error
         return self.azimuth_error
 
-    def altitude_update():
+    def altitude_update(self):
         self.current_altitude = self.altitude_encoder.get_degrees()
         altitude_error = self.altitude - float(self.current_altitude)
+        altitude_error = abs(altitude_error)
+        self.altitude_error = altitude_error
         print('goal altitude:',  self.altitude, 'current altitude:', self.current_altitude, 'difference:', altitude_error)
         if altitude_error >= 0:
             print('positive altitude')
@@ -180,27 +182,29 @@ class Telescope():
             self.altitude_motor.set_speed(3)
         if altitude_error >= 160:
             self.altitude_motor.set_speed(4)
-    
-    def azimuth_direction():
+        return self.altitude_error
+
+    def azimuth_direction(self):
         self.current_azimuth = self.azimuth_encoder.get_degrees()
-        azimuth_error = self.azimuth  - float(self.current_azimuth)
-        if azimuth_error >0:
+        self.azimuth_error = self.azimuth  - float(self.current_azimuth)
+        if self.azimuth_error >0:
             print('positive azimuth')
             self.azimuth_motor.set_direction(1)
-        elif azimuth_error > 0:
+        elif self.azimuth_error > 0:
             print('negative azimuth')
             self.azimuth_motor.set_direction(0)
-    
-    def altitude_direction():
+        return self.azimuth_error
+
+    def altitude_direction(self):
         self.current_altitude = self.altitude_encoder.get_degrees()
-        altitude_error = self.altitude - float(self.current_altitude)
-        if altitude_error >= 0:
+        self.altitude_error = self.altitude - float(self.current_altitude)
+        if self.altitude_error >= 0:
             print('positive altitude')
             self.altitude_motor.set_direction(1)
-        if altitude_error < 0:
+        if self.altitude_error < 0:
             print('negative altitude')
             self.altitude_motor.set_direction(0)
-
+        return self.altitude_error
     
     def diff_of_errors(self):
         """
@@ -221,12 +225,13 @@ class Telescope():
             self.azimuth_direction()
             self.azimuth_motor.set_speed(2)
             self.altitude_motor.set_speed(2)
-            if abs(diff_of_errors()) >= 50:
+            if abs(self.diff_of_errors()) >= 50:
+                print(self.e_of_e)
                 self.azimuth_update()
-            elif abs(diff_of_errors()) >= 20:
+            elif abs(self.diff_of_errors()) >= 20:
                 self.azimuth_update()
                 self.altitude_update()
-            elif abs(diff of errors >= 120:
+            elif abs(self.diff_of_errors()) >= 120:
                 self.altitude_update()
             else:
                 self.altitude_update()

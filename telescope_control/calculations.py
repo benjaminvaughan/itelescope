@@ -31,12 +31,12 @@ class Calculations():
         self.get_julian_date()
         self.longitude_of_ascending_moon()
         self.mean_longitude_of_sun()
-        self.obliquity()
+        self.Obliquity()
         self.nutation()
         self.gast = self.get_GMST() + self.equation_of_equinoxes()
         return self.gast
    
-    def obliquity(self):
+    def Obliquity(self):
         self.obliquity =  23.4393 - 0.0000004 * self.D
         return self.obliquity
 

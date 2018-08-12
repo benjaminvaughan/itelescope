@@ -23,9 +23,11 @@ if __name__ == '__main__':
     telescope.azimuth_encoder.run_encoder()
     telescope.altitude_encoder.run_encoder()
     gps_parse = GPS_parse()
+    telescope.get_gast()
     while True:   
         longlat = gps_parse.longitude_latitude()
         if not longlat is None:
+            print(longlat)
             (longitude, latitude) = longlat
             telescope.get_longitude(longitude)
             telescope.get_latitude(latitude)
@@ -62,7 +64,7 @@ if __name__ == '__main__':
             telescope.set_star_right_ascension(star_right_ascension)
             print(star_right_ascension)
             telescope.get_gast()   
-            telescope.set_star_declination(latitude)
+            telescope.set_star_declination(star_declination)
             telescope.star_LHA()
             telescope.set_star_azimuth()
             telescope.set_star_altitude()
@@ -101,6 +103,7 @@ if __name__ == '__main__':
             degrees = str(line)
             degrees = angle_conversions.degrees_to_degrees(degrees)
             telescope.set_declination(degrees)
+            telescope.get_gast()
             telescope.get_local_hour_angle()
             telescope.set_altitude()
             telescope.set_azimuth()
