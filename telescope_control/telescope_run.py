@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+#file for stringing together everything and running the telescope
 from parsing_gps import GPS_parse
 from motor_class import Motor
 from encoder_class import Encoder
