@@ -1,4 +1,4 @@
-#telescope class for control of the telescope **
+#**telescope class for control of the telescope **
 from encoder_class import Encoder
 from motor_class import Motor
 import datetime
