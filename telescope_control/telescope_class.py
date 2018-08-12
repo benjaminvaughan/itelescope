@@ -129,14 +129,11 @@ class Telescope():
         self.tele_azimuth = self.Calculations.convert_degrees( self.degrees)
         return self.tele_azimuth
 
-    def update(self):
+    def update_azimuth(self):
         """
         function that calculates the difference between the current
         and target azimuth/altitude and sets a speed accordingly
-        """
-        self.current_altitude = self.altitude_encoder.get_degrees()
-        altitude_error = self.altitude - float(self.current_altitude)
-        print('goal altitude',  self.altitude, 'current altitude', self.current_altitude, 'difference in altitudes', altitude_error)
+        """)
         self.current_azimuth = self.azimuth_encoder.get_degrees()
         azimuth_error = self.azimuth  - float(self.current_azimuth)
         print('goal azimuth', self.azimuth, 'current azimuth', self.azimuth_encoder.get_degrees(), 'difference in azimuth', azimuth_error)
@@ -146,75 +143,100 @@ class Telescope():
         elif azimuth_error > 0:
             print('negative azimuth')
             self.azimuth_motor.set_direction(0)
+        altitude_error = abs(altitude_error)
+        azimuth_error = abs(azimuth_error)
+        if azimuth_error >= 4:
+            self.azimuth_motor.stopping_motor()
+        if azimuth_error >= 20:
+            self.azimuth_motor.set_speed(1)
+        if azimuth_error >= 40:
+            self.azimuth_motor.set_speed(2)
+        if azimuth_error >= 80:
+            self.azimuth_motor.set_speed(3)
+        if azimuth_error >= 160:
+            self.azimuth_motor.set_speed(4)
+        if azimuth_error >= 280:
+            self.azimuth_motor.set_speed(5)
+        self.azimuth_error = azimuth_error
+        return self.azimuth_error
+
+    def altitude_update():
+        self.current_altitude = self.altitude_encoder.get_degrees()
+        altitude_error = self.altitude - float(self.current_altitude)
+        print('goal altitude:',  self.altitude, 'current altitude:', self.current_altitude, 'difference:', altitude_error)
         if altitude_error >= 0:
             print('positive altitude')
             self.altitude_motor.set_direction(1)
         if altitude_error < 0:
             print('negative altitude')
             self.altitude_motor.set_direction(0)
-        altitude_error = abs(altitude_error)
-        azimuth_error = abs(azimuth_error)
-        if azimuth_error >= 0:
-            self.azimuth_motor.stopping_motor()
-        if azimuth_error >= 10:
-            self.azimuth_motor.set_speed(1)
-        if azimuth_error >= 20:
-            self.azimuth_motor.set_speed(2)
-        if azimuth_error >= 40:
-            self.azimuth_motor.set_speed(3)
-        if azimuth_error >= 50:
-            self.azimuth_motor.set_speed(4)
-        if azimuth_error >= 60:
-            self.azimuth_motor.set_speed(5)
-        if azimuth_error >= 70:
-            self.azimuth_motor.set_speed(6)
-        if altitude_error >= 0:
+        if altitude_error >= 4:
             self.altitude_motor.stopping_motor()
-        if altitude_error >= 10:
-            self.altitude_motor.set_speed(1)
         if altitude_error >= 20:
-            self.altitude_motor.set_speed(2)
+            self.altitude_motor.set_speed(1)
         if altitude_error >= 40:
+            self.altitude_motor.set_speed(2)
+        if altitude_error >= 80:
             self.altitude_motor.set_speed(3)
-        if altitude_error >= 50:
-            self.altitude_motor.set_speed(3)
-        if altitude_error >= 50:
+        if altitude_error >= 160:
             self.altitude_motor.set_speed(4)
-#        if altitude_error >= 60:
-#            self.altitude_motor.set_speed(5)
-#        if altitude_error >= 70:
-#            self.altitude_motor.set_speed(6)
+        if altitude_error >= 280:
+            self.altitude_motor.set_speed(5)
         self.altitude_error = altitude_error
-        self.azimuth_error = azimuth_error
-        return self.azimuth_error, self.altitude_error
+        return self.altitude_error
+    
+    def azimuth_direction():
+        self.current_azimuth = self.azimuth_encoder.get_degrees()
+        azimuth_error = self.azimuth  - float(self.current_azimuth)
+        if azimuth_error >0:
+            print('positive azimuth')
+            self.azimuth_motor.set_direction(1)
+        elif azimuth_error > 0:
+            print('negative azimuth')
+            self.azimuth_motor.set_direction(0)
+    
+    def altitude_direction():
+        self.current_altitude = self.altitude_encoder.get_degrees()
+        altitude_error = self.altitude - float(self.current_altitude)
+        if altitude_error >= 0:
+            print('positive altitude')
+            self.altitude_motor.set_direction(1)
+        if altitude_error < 0:
+            print('negative altitude')
+            self.altitude_motor.set_direction(0)
 
-    def error_of_errors(self):
+    
+    def diff_of_errors(self):
         """
         function that calculates the difference between the azimuth error and
         the altitude error
         """
-        e_of_e = self.azimuth_error - self.altitude_error
-        while 1:
-            if e_of_e >= 10:
-                self.altitude_motor.stopping_motor
-            else:
-                break    
-
+        self.e_of_e = self.azimuth_error - self.altitude_error
+        return self.e_of_e
+    
     def run_go_to_star(self):
         """
         telescope that calls the update function if the altitude of the 
         telescope is not the same as the target altitude and if the azimuth
         is not the same as the target azimuth
         """
-        if self.altitude != self.tele_altitude:
-            self.update()
-            self.error_of_errors
-            print('slewing telescope')
-        elif self.azimuth != self.tele_azimuth:
-            self.update()
-            self.error_of_errors
-            print('slewing telescope')
-
+        if self.altitude != self.tele_altitude or self.azimuth != self.tele_azimuth:
+            self.altitude_direction()
+            self.azimuth_direction()
+            self.azimuth_motor.set_speed(2)
+            self.altitude_motor.set_speed(2)
+            if abs(diff_of_errors()) >= 50:
+                self.azimuth_update()
+            elif abs(diff_of_errors()) >= 20:
+                self.azimuth_update()
+                self.altitude_update()
+            elif abs(diff of errors >= 120:
+                self.altitude_update()
+            else:
+                self.altitude_update()
+                self.azimuth_update()
+            
+                
 
     def AWSD_control(self, key):
         """
