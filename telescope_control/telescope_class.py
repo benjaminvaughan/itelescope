@@ -180,10 +180,6 @@ class Telescope():
             self.altitude_motor.set_speed(3)
         if altitude_error >= 160:
             self.altitude_motor.set_speed(4)
-        if altitude_error >= 280:
-            self.altitude_motor.set_speed(5)
-        self.altitude_error = altitude_error
-        return self.altitude_error
     
     def azimuth_direction():
         self.current_azimuth = self.azimuth_encoder.get_degrees()
