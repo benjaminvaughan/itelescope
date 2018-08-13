@@ -221,21 +221,8 @@ class Telescope():
         is not the same as the target azimuth
         """
         if self.altitude != self.tele_altitude or self.azimuth != self.tele_azimuth:
-            self.altitude_direction()
-            self.azimuth_direction()
-            self.azimuth_motor.set_speed(2)
-            self.altitude_motor.set_speed(2)
-            if abs(self.diff_of_errors()) >= 50:
-                print(self.e_of_e)
-                self.azimuth_update()
-            elif abs(self.diff_of_errors()) >= 20:
-                self.azimuth_update()
-                self.altitude_update()
-            elif abs(self.diff_of_errors()) >= 120:
-                self.altitude_update()
-            else:
-                self.altitude_update()
-                self.azimuth_update()
+            self.altitude_update()
+            self.azimuth_update()
             
                 
 
