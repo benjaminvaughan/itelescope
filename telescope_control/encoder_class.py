@@ -31,14 +31,25 @@ class Encoder():
     def call_back_z(self, pin, level, tick):
         self.position = 0
    
-    def encoder_restart(self):
-        if self.degree >= 120:
-           self.degree = 0
-        else:
-           pass 
+    def altitude_restart(self):
+        revs = self.degree // 360
+        self.degree -= revs * 360
+        if self.degree > 120:
+            self.degree =- 120
+            return self.degree
+        if self.degree < -120:
+            self.degree =+ 120
+            return self.degree
+        print(self.degree)
+        return self.degree
+
     def get_degrees(self):
         print('encoder', self.encoder_id, self.degree)
         return float(self.degree)
+
+    def run_altitude_encoder(self):
+        self.pi.callback(self.pin_a, 2, self.call_back_a)
+        self.pi.callback(self.pin_b, 1, self.call_back_b)
 
     def run_encoder(self):
         self.pi.callback(self.pin_a, 2, self.call_back_a)

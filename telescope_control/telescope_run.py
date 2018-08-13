@@ -20,7 +20,7 @@ if __name__ == '__main__':
     angle_conversions = angle_conversions()
     two_star_calibration = Two_Star_Calibration(telescope)
     mode = 'manual'
-    telescope.azimuth_encoder.run_encoder()
+    telescope.azimuth_encoder.run_altitude_encoder()
     telescope.altitude_encoder.run_encoder()
     gps_parse = GPS_parse()
     telescope.get_gast()

@@ -20,6 +20,7 @@ class Motor():
 	   '1/8':(1,1,0),
 	   '1/16':(0,0,1),
 	   '1/32':(1,0,1)}
+        self.speed = 0
 
     def a32_microsteps(self):
         for i in range(3):
@@ -43,18 +44,26 @@ class Motor():
         
 
     def set_speed(self, speed):
+        self.speed = speed
+        if speed == 0:
+            self.stopping_motor()
+            return self.speed
         if speed == 1:
             self.a32_microsteps()
             self.set_frequency_dutycycle(128, 1500)
+            return self.speed
         elif speed == 2:
             self.a32_microsteps()
             self.set_frequency_dutycycle(128, 2000)
+            return self.speed
         elif speed == 3:
             self.a16_microsteps()
             self.set_frequency_dutycycle(128, 1000)
+            return self.speed
         elif speed == 4:
             self.a8_microsteps()
             self.set_frequency_dutycycle(128, 1000)
+            return self.speed
         elif speed == 5:
             self.a4_microsteps()
             self.set_frequency_dutycycle(128, 1000)
@@ -73,8 +82,8 @@ class Motor():
 
     def stopping_motor(self):
         self.pi.set_PWM_dutycycle(self.step_pin, 0)
-        #self.pi.stop()
-        
+        self.pi.set_PWM_frequency(self.step_pin, 0)
+
     def creating_wave(self, frequency):
         self.pi.wave_create(1.0 / frequency)
 
