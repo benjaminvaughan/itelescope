@@ -24,6 +24,7 @@ if __name__ == '__main__':
     telescope.altitude_encoder.run_encoder()
     gps_parse = GPS_parse()
     telescope.get_gast()
+    print(' AWSD or up, right, left, down for manual control C for callibration, l for manual input of longitude and latitude, g for goto mode and f for push to mode')
     while True:   
         longlat = gps_parse.longitude_latitude()
         if not longlat is None:
@@ -43,7 +44,15 @@ if __name__ == '__main__':
             continue
         if telescope.AWSD_control(key):
             continue
-    
+        elif key == 'l':
+            print('enter longitude')
+            line = input()
+            longitude = float(line)
+            telescope.get_longitude(longitude)
+            print('enter latitude')
+            line = input()
+            latitude = float(line)
+            telescope.get_latitude(latitude)
         if key == 'q':
             telescope.altitude_motor.stopping_motor()
             telescope.azimuth_motor.stopping_motor()
