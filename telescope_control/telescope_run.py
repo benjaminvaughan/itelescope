@@ -24,11 +24,10 @@ if __name__ == '__main__':
     telescope.altitude_encoder.run_encoder()
     gps_parse = GPS_parse()
     telescope.get_gast()
-    print(' AWSD or up, right, left, down for manual control C for callibration, l for manual input of longitude and latitude, g for goto mode and f for push to mode')
+    print(' AWSD or up, right, left, down for manual control, h to print longitude and latitude, C for callibration, l for manual input of longitude and latitude, g for goto mode and f for push to mode')
     while True:   
         longlat = gps_parse.longitude_latitude()
         if not longlat is None:
-            print(longlat)
             (longitude, latitude) = longlat
             telescope.get_longitude(longitude)
             telescope.get_latitude(latitude)
@@ -118,7 +117,9 @@ if __name__ == '__main__':
             telescope.set_azimuth()
             telescope.get_azimuth()
             telescope.get_altitude()
+        elif key == 'h':
+            print(longlat)
         else:
             print('invalid key "%s"\r' % key)
-       
+    
 
