@@ -1,41 +1,46 @@
-from encoder_class import Encoder
+#!/usr/bin/python3
+#file for stringing together everything and running the telescope
+from parsing_gps import GPS_parse
 from motor_class import Motor
-#program for debugging the telescope_run application.
+from encoder_class import Encoder
+from telescope_class import Telescope
 import pigpio
+import time
+import datetime
 import sys
 from calculations import Calculations
-import math
-import numpy
 import click
-from telescope_class import Telescope
-
-
-telescope = Telescope()
+from angle_conversions import angle_conversions
+from keys import Keyboard
+from two_star_calibration import Two_Star_Calibration
 
 if __name__ == '__main__':
-    pi = pigpio.pi()
-    altitude_encoder = Encoder(16, 19, 26, 1)
-    altitude_motor = Motor(24, 23, 25, 8, 7, pi)
-    azimuth_encoder = Encoder(20, 21, 12, 2)
-    azimuth_motor = Motor(10, 9 , 17, 27, 22)
-    longitude = 20
-    latitude = 20
-    telescope.get_longitude(longitude)
-    telescope.get_latitude(latitude)
-    telescope.set_right_ascension(20)
-    telescope.set_declination(20)
-    telescope.get_gast()
-    telescope.get_local_hour_angle()
-    telescope.set_altitude()
-    telescope.set_azimuth()
-    altitude_encoder.run_encoder()
-    azimuth_encoder.run_altitude_encoder()
-    tele_azimuth = azimuth_encoder.get_degrees()
-    tele_altitude = altitude_encoder.get_degrees()
     telescope = Telescope()
-    telescope.azimuth = 200
-    telescope.altitude = 200
-    while True:
-        if tele_azimuth != 20 or tele_altitude != 20:
-            telescope.azimuth_update()
-            telescope.altitude_update() 
+    keyboard = Keyboard()
+    angle_conversions = angle_conversions()
+    two_star_calibration = Two_Star_Calibration(telescope)
+    mode = 'manual'
+    telescope.azimuth_encoder.run_altitude_encoder()
+    telescope.altitude_encoder.run_encoder()
+    gps_parse = GPS_parse()
+    telescope.get_gast()
+    telescope.get_longitude(40)
+    telescope.get_latitude(40)
+    while True:   
+        mode = 'goto'
+        line = '200:200:200'
+        degrees = (line)
+        degrees = angle_conversions.hours_to_degrees2(degrees)
+        telescope.set_right_ascension(degrees)
+        line = '200:200:200'
+        degrees = (line)
+        degrees = angle_conversions.degrees_to_degrees(degrees)
+        telescope.set_declination(degrees)
+        telescope.get_gast()
+        telescope.get_local_hour_angle()
+        telescope.set_altitude()
+        telescope.set_azimuth()
+        telescope.get_azimuth()
+        telescope.get_altitude()
+        telescope.run_go_to_star()
+
