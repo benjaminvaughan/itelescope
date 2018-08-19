@@ -160,7 +160,7 @@ class Telescope():
         self.azimuth_error = azimuth_error
         if azimuth_error >= 0:
             self.azimuth_motor.stopping_motor()
-        if azimuth_error >= 20:
+        if azimuth_error >= 30:
             self.azimuth_motor.set_speed(1)
         if azimuth_error >= 40:
             self.azimuth_motor.set_speed(2)
@@ -188,7 +188,7 @@ class Telescope():
             self.altitude_motor.set_direction(1)
         if altitude_error >= 0:
             self.altitude_motor.stopping_motor()
-        if altitude_error >= 20:
+        if altitude_error >= 30:
             self.altitude_motor.set_speed(1)
         if altitude_error >= 40:
             self.altitude_motor.set_speed(2)
