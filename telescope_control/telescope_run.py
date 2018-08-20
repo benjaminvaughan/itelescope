@@ -31,7 +31,6 @@ if __name__ == '__main__':
             (longitude, latitude) = longlat
             telescope.get_longitude(longitude)
             telescope.get_latitude(latitude)
-            time.sleep(1)
         key = keyboard.getKey()
         if key is None: 
             if mode == 'goto':
