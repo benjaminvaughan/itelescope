@@ -38,4 +38,4 @@ class digital_setting_circle():
         self.setting_target()
         if self.az_error != 0 or self.alt_error != 0:
             print(self.setting_target)
-            
+            time.sleep(1)
