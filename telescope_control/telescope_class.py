@@ -13,9 +13,9 @@ import click
 class Telescope():
     def __init__(self):
         pi = pigpio.pi()
-        self.altitude_encoder = Encoder(16, 19, 26, 1)
+        self.azimuth_encoder = Encoder(16, 19, 26, 1)
         self.altitude_motor = Motor(24, 23, 25, 8, 7, pi)
-        self.azimuth_encoder = Encoder(20, 21, 12, 2)
+        self.altitude_encoder = Encoder(20, 21, 12, 2)
         self.azimuth_motor = Motor(10, 9 , 17, 27, 22, pi)
         self.Calculations = Calculations()
         self.speed = 0
@@ -146,7 +146,6 @@ class Telescope():
         function that calculates the difference between the current
         and target azimuth/altitude and sets a speed accordingly
         """
-        self.azimuth_encoder.altitude_restart()
         self.current_azimuth = self.azimuth_encoder.get_degrees()
         azimuth_error = self.azimuth  - float(self.current_azimuth)
     #    print('goal azimuth', self.azimuth, 'current azimuth', self.azimuth_encoder.get_degrees(), 'difference in azimuth', azimuth_error)
@@ -175,6 +174,7 @@ class Telescope():
         return self.azimuth_error
 
     def altitude_update(self):
+        self.altitude_encoder.altitude_restart()
         self.current_altitude = self.altitude_encoder.get_degrees()
         altitude_error = self.altitude - float(self.current_altitude)
         altitude_error = abs(altitude_error)
