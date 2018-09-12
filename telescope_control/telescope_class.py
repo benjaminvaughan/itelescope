@@ -8,20 +8,22 @@ from calculations import Calculations
 import math
 import numpy
 import click
+from telescope_calibration import matrices and Stars
 #used for talking with meadle LX200 Protocol
 
 class Telescope():
     def __init__(self):
         pi = pigpio.pi()
-        self.azimuth_encoder = Encoder(16, 19, 26, 1)
+        self.azimuth_encoder = Encoder(16, 19, 26,pinc, pind, powerpin 1)
         self.altitude_motor = Motor(24, 23, 25, 8, 7, pi)
-        self.altitude_encoder = Encoder(20, 21, 12, 2)
+        self.altitude_encoder = Encoder(20, 21, 12,pinc,pind, powerpin 2)
         self.azimuth_motor = Motor(10, 9 , 17, 27, 22, pi)
         self.Calculations = Calculations()
         self.speed = 0
         self.tele_azimuth = 0
         self.tele_altitude = 0
-         
+        self.azimuth_motor.set_speed_callback(azimuth_encoder.clear_flag)
+        self.altitude_motor.set_speed_callback(altitude_encoder.clear_flag)
     def set_azimuth(self):
         """
         sets the target azimuth after converting from right_ascension and 
@@ -198,7 +200,9 @@ class Telescope():
             self.altitude_motor.set_speed(4)
         print('debug_altitude', self.current_altitude, self.altitude_error, self.altitude_motor.speed)
         return self.altitude_error
+    
 
+    
     def azimuth_direction(self):
         self.azimuth_encoder.altitude_restart()
         self.current_azimuth = self.azimuth_encoder.get_degrees()

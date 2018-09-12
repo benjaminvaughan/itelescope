@@ -29,6 +29,43 @@ class Stars():
         """
         self.star_1 = [0, 0]
         self.star_2 = [0, 0]
+        self.target_star = [0,0]
+
+    def in_ra_dec(self):
+        """
+        function that lets you input data for the target star
+        """
+        print('enter right ascension in HH:MM:SS')
+        line = input()
+        right_ascension = str(line)
+        right_ascension = angle_conversions.hours_to_degrees2(right_ascension)
+        self.target_star[0] = right_ascension
+        telescope.set_right_ascension(right_ascension)
+        print('enter declination in DD:MM:SS')
+        line = input()
+        declination = str(line)
+        declination = angle_conversions.degrees_to_degrees(declination)
+        self.target_star[1] = declination
+        telescope.set_declination(declination)
+        telescope.set_declination(degrees)
+        telescope.get_gast()
+        telescope.get_local_hour_angle()
+        telescope.set_altitude()
+        telescope.set_azimuth()
+        telescope.get_azimuth()
+        telescope.get_altitude()
+        print(self.target_star)
+
+    def star_az_alt(self):
+        self.inverse_transformation()
+        Z1 = np.cos(self.target_star[1])*np.cos(self.target_star[0])
+        X1 = np.cos(self.target_star[1])*np.sin(self.target_star[0])
+        C1 = np.sin(self.target_star[1])
+        target_star_matrix = np.matrix([[Z1]
+                                        [X1]
+                                        [C1]])
+        telescope_matrix = np.matmul(target_star_matrix, self.inverse_transformation_matrix)
+        print(telescope_matrix)
 
     def define_star_2(self, s_declination, s_right_ascension):
         #function that stores the data for star_2
@@ -42,20 +79,16 @@ class Stars():
         telescope.set_star_right_ascension(s_right_ascension)
         self.star_1 = [telescope.s_right_ascension, telescope.s_declination]
 
-class Matrices():
-    def __init__(self):
-        self.stars = Stars()
-
     def correction_matrices(self):
         #star1_data
-        L1 = np.cos(self.stars.star_1[0])*np.cos(self.stars.star_1[1])
-        M1 = np.cos(self.stars.star_1[0])*np.sin(self.stars.star_1[1])
-        N1 = np.sin(self.stars.star_1[0])
+        L1 = np.cos(Stars.star_1[1])*np.cos(Stars.star_1[0])
+        M1 = np.cos(Stars.star_1[1])*np.sin(Stars.star_1[0])
+        N1 = np.sin(Stars.star_1[1])
 
         #star2_data
-        L2 = np.cos(self.stars.star_2[0])*np.cos(star_2[1])
-        M2 = np.cos(star_2[0])*np.sin(star_2[1])
-        N2 = np.sin(star_2[0])
+        L2 = np.cos(Stars.star_2[1])*np.cos(Stars.star_2[0])
+        M2 = np.cos(Stars.star_2[1])*np.sin(Stars.star_2[0])
+        N2 = np.sin(Stars.star_2[1])
         
         #star1_telescope_position
         telescope_position = [altitude_encoder.get_degrees(), azimuth_encoder.get_degrees()]
@@ -92,8 +125,9 @@ class Matrices():
 
         return self.transformation_matrix
 
-    def convert_to_telescope_coordinates(self, declination, right_ascension):
-        pass
+    def inverse_transformation(self):
+        self.inverse_transformation_matrix = np.linalg.inv(transformation_matrix)
+        return self.inverse_transformation_matrix
 
     
 if __name__ == '__main__':
@@ -107,6 +141,21 @@ if __name__ == '__main__':
     star_right_ascension = angle_conversions.hours_to_degrees2(star_right_ascension)
     Stars.define_star_1(star_declination, star_right_ascension)
     print(Stars.star_1)
+    print('enter declination of star in DD:MM:SS')
+    line = input()
+    star_declination = str(line)
+    star_declination = angle_conversions.degrees_to_degrees(star_declination)
+    print('enter right ascension of star in HH:MM:SS')
+    line = input()
+    star_right_ascension = str(line)
+    star_right_ascension = angle_conversions.hours_to_degrees2(star_right_ascension)
+    Stars.define_star_2(star_declination, star_right_ascension)
+    print(Stars.star_2)
+    Stars.correction_matrices()
+    print(Stars.correction_matrices())
+    Stars.inverse_transformation()
+    print(Stars.inverse_transformation())
+    
         
                     
                     
