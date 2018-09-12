@@ -21,7 +21,11 @@ class Motor():
 	   '1/16':(0,0,1),
 	   '1/32':(1,0,1)}
         self.speed = 0
+        self.speed_callback = None
 
+    def set_speed_callback(self, callback):
+        self.speed_callback = callback
+        
     def a32_microsteps(self):
         for i in range(3):
             self.pi.write(self.mode[i], self.resolution['1/32'][i])
@@ -44,6 +48,10 @@ class Motor():
         
 
     def set_speed(self, speed):
+        # if there is a callback registered, and speed changes from zero
+        # to non-zero, call it
+        if not self.speed_callback is None and self.speed == 0 and speed != 0:
+            self.speed_callback()
         self.speed = speed
         if speed == 0:
             self.stopping_motor()
