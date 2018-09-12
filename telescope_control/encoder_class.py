@@ -1,3 +1,4 @@
+#for encoders
 import pigpio
 import time
 
