@@ -6,11 +6,11 @@ class Encoder():
     def __init__(self, pin_a, pin_b, pin_z, pin_c, pin_d, power_pin, encoder_id, pi = None):
         if pi is None:
             pi = pigpio.pi()
-        Hall_Effect = hall_effect()
-        azimuth_hall_effect = Hall_Effect()
-        altitude_hall_effect = Hall_Effect()
-        azimuth_hall_effect.hall_effect_power_supply()
-        altitude_hall_effect.hall_effect_power_supply()
+        #Hall_Effect = hall_effect()
+        #azimuth_hall_effect = Hall_Effect()
+        #altitude_hall_effect = Hall_Effect()
+        #azimuth_hall_effect.hall_effect_power_supply()
+        #altitude_hall_effect.hall_effect_power_supply()
         self.pi = pi
         self.pin_a = pin_a
         self.pin_b = pin_b
@@ -25,16 +25,13 @@ class Encoder():
         self.encoder_id = encoder_id
         self.pin_c = pin_c
         self.pin_d = pin_d
-        pi.set_mode(pin_c, pigpio.INPUT)
-        pi.set_mode(pin_d, pigpio.INPUT)
+        # *** pi.set_mode(pin_c, pigpio.INPUT)
+        # *** pi.set_mode(pin_d, pigpio.INPUT)
         self.power_pin = power_pin
-        pi.set_mode(pin_e, pigpio.OUTPUT
-        self.prev_c_state = None
-        self.prev_d_state = None
-                    
+        # *** power_pin? pi.set_mode(pin_e, pigpio.OUTPUT)
+
     def call_back_a(self, pin, level, tick):
-        #defines a call back for when the a_state changes
-        self.a_state = level
+        self.a_state = level 
 
     def call_back_b(self, pin, level, tick):
         #defines a callback for when the b_state changes and determines in which direction the object is moving.

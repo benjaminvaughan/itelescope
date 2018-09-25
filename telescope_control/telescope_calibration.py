@@ -3,23 +3,25 @@
 code for calibration the telescope using a transformation matrix. Math is taken from this website: http://www.geocities.jp/toshimi_taki/aim/aim.htm
 """
 
+import sys
 from telescope_class import Telescope
 from encoder_class import Encoder
-from digital_setting_circle import digital_setting_circle
+#from digital_setting_circle import digital_setting_circle
 import numpy as np
-from calculations import calculations
+from calculations import Calculations
 from angle_conversions import angle_conversions
 import datetime
 import time
-import sys
 from parsing_gps import GPS_parse
+import math
 
 telescope = Telescope()
-calculations = calculations()
+calculations = Calculations()
 angle_conversions = angle_conversions()
-altitude_encoder = Encoder()
-azimuth_encoder = Encoder()
-
+altitude_encoder = Encoder(16, 19, 26, 6, 5, 13, 1)
+azimuth_encoder = Encoder(20, 21 ,12, 25, 4, 18, 2)
+altitude_encoder.run_encoder()
+azimuth_encoder.run_encoder()
 class Stars():
     def __init__(self):
         """
@@ -75,20 +77,20 @@ class Stars():
 
     def define_star_1(self, s_declination, s_right_ascension):
         #function that stores the data for star_1
-        telescope.set_star_Declination(s_declination)
+        telescope.set_star_declination(s_declination)
         telescope.set_star_right_ascension(s_right_ascension)
         self.star_1 = [telescope.s_right_ascension, telescope.s_declination]
 
     def correction_matrices(self):
         #star1_data
-        L1 = np.cos(Stars.star_1[1])*np.cos(Stars.star_1[0])
-        M1 = np.cos(Stars.star_1[1])*np.sin(Stars.star_1[0])
-        N1 = np.sin(Stars.star_1[1])
+        L1 = np.cos(stars.star_1[1])*np.cos(stars.star_1[0])
+        M1 = np.cos(stars.star_1[1])*np.sin(stars.star_1[0])
+        N1 = np.sin(stars.star_1[1])
 
         #star2_data
-        L2 = np.cos(Stars.star_2[1])*np.cos(Stars.star_2[0])
-        M2 = np.cos(Stars.star_2[1])*np.sin(Stars.star_2[0])
-        N2 = np.sin(Stars.star_2[1])
+        L2 = np.cos(stars.star_2[1])*np.cos(stars.star_2[0])
+        M2 = np.cos(stars.star_2[1])*np.sin(stars.star_2[0])
+        N2 = np.sin(stars.star_2[1])
         
         #star1_telescope_position
         telescope_position = [altitude_encoder.get_degrees(), azimuth_encoder.get_degrees()]
@@ -102,12 +104,27 @@ class Stars():
         m2 = np.cos(telescope_position[0])*np.sin(telescope_position[1])
         n2 = np.sin(telescope_position[0])
 
-        constant_1 = 1/math.sqrt((m1*n1-n1*m1)^2 + (n1*l2 - l1*n2)^2 + (l1*m2 - m1*l2)^2)
+        x = m1*n2 - n1*m1
+        print(x)
+        x2 = x*x
+        y = n1*l2 - l1*n2
+        print(y)
+        y2 = y*y
+        z = l1*m2 - m1*l2
+        print(z)
+        z2 = z*z
+        constant_1 = 1/math.sqrt(x2 + y2 + z2)
         l3 = constant_1* (m1*n2- n1*m2)
         m3 = constant_1* (n1*l2- l1*n2)
         n3 = constant_1* (l1*m2- m1*l2)
         correction_matrix_1 = [l3, m3, n3]
-        constant_2 = 1/math.sqrt((M1*N2 - N1*m2)^2 + (N1*L2-L1*N2)^2 + (L1*M2-M1*L2)^2)
+        x = (M1*N2-N1*M2)
+        x2 = x*x
+        y = N1*L2-L1*N2
+        y2 = y*y
+        z = L1*M2 - M1*L2
+        z2 = z*z
+        constant_2 = 1/math.sqrt(x2 + y2 + z2)
         L3 = constant_2* (M1*N2- N1*M2)
         M3 = constant_2* (N1*L2- L1*N2)
         N3 = constnat_2* (L1*M2- M1*L2)
@@ -132,6 +149,7 @@ class Stars():
     
 if __name__ == '__main__':
     print('enter declination of star in DD:MM:SS')
+    stars = Stars()
     line = input()
     star_declination = str(line)
     star_declination = angle_conversions.degrees_to_degrees(star_declination)
@@ -139,8 +157,8 @@ if __name__ == '__main__':
     line = input()
     star_right_ascension = str(line)
     star_right_ascension = angle_conversions.hours_to_degrees2(star_right_ascension)
-    Stars.define_star_1(star_declination, star_right_ascension)
-    print(Stars.star_1)
+    stars.define_star_1(star_declination, star_right_ascension)
+    print(stars.star_1)
     print('enter declination of star in DD:MM:SS')
     line = input()
     star_declination = str(line)
@@ -149,12 +167,12 @@ if __name__ == '__main__':
     line = input()
     star_right_ascension = str(line)
     star_right_ascension = angle_conversions.hours_to_degrees2(star_right_ascension)
-    Stars.define_star_2(star_declination, star_right_ascension)
-    print(Stars.star_2)
-    Stars.correction_matrices()
-    print(Stars.correction_matrices())
-    Stars.inverse_transformation()
-    print(Stars.inverse_transformation())
+    stars.define_star_2(star_declination, star_right_ascension)
+    print(stars.star_2)
+    stars.correction_matrices()
+    print(stars.correction_matrices())
+    stars.inverse_transformation()
+    print(stars.inverse_transformation())
     
         
                     
