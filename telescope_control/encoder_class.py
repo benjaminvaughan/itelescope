@@ -87,19 +87,3 @@ class Encoder():
         self.pi.callback(self.pin_a, 2, self.call_back_a)
         self.pi.callback(self.pin_b, 1, self.call_back_b)
         self.pi.callback(self.pin_z, 1, self.call_back_z)
-
-    def clear_flag(self):
-        self.hall_effect_flag = 0
-                    
-    def hall_effect_power_supply(self, duty_cycle, frequency):
-        self.pi.set_PWM_dutycycle(self.power_pin, duty_cycle)
-        self.pi.set_PWM_frequency(self.power_pin, frequency)
-
-
-    def callback(self, pin, level, tick):
-        if pin == self.c_pin and level != self.prev_c_state:
-            self.hall_effect_flag = 1
-            self.prev_c_state = level
-        elif pin == self.d_pin and level != self.prev_d_state:
-            self.hall_effect_flag = 1
-            self.prev_d_state = level
