@@ -21,10 +21,6 @@ class Motor():
 	   '1/16':(0,0,1),
 	   '1/32':(1,0,1)}
         self.speed = 0
-        self.speed_callback = None
-
-    def set_speed_callback(self, callback):
-        self.speed_callback = callback
         
     def a32_microsteps(self):
         for i in range(3):
