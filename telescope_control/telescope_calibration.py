@@ -83,6 +83,14 @@ class Stars():
         self.star_1 = [telescope.s_right_ascension, telescope.s_declination]
         self.set_telescope_star_1_position()
 
+    def set_telescope_star_2_position():
+        #star2_telescope_position
+        self.telescope_position2 = [altitude_encoder.get_degrees(), azimuth_encoder.get_degrees()]
+        
+    def set_telescope_star_1_position():        
+        #star1_telescope_position
+        self.telescope_position1 = [altitude_encoder.get_degrees(), azimuth_encoder.get_degrees()]
+        
     def correction_matrices(self):
         #star1_data
         L1 = np.cos(stars.star_1[1])*np.cos(stars.star_1[0])
@@ -93,22 +101,14 @@ class Stars():
         L2 = np.cos(stars.star_2[1])*np.cos(stars.star_2[0])
         M2 = np.cos(stars.star_2[1])*np.sin(stars.star_2[0])
         N2 = np.sin(stars.star_2[1])
-    def set_telescope_star_1_position():        
-        #star1_telescope_position
-        telescope_position1 = [altitude_encoder.get_degrees(), azimuth_encoder.get_degrees()]
 
-        l1 = np.cos(telescope_position1[0])*np.cos(telescope_position1[1])
-        m1 = np.cos(telescope_position1[0])*np.sin(telescope_position1[1])
-        n1 = np.sin(telescope_position1[0])
-
-    def set_telescope_star_2_position():
-        #star2_telescope_position
-        telescope_position2 = [altitude_encoder.get_degrees(), azimuth_encoder.get_degrees()]
-
+        l1 = np.cos(self.telescope_position1[0])*np.cos(self.telescope_position1[1])
+        m1 = np.cos(self.telescope_position1[0])*np.sin(self.telescope_position1[1])
+        n1 = np.sin(self.telescope_position1[0])
         
-        l2 = np.cos(telescope_position2[0])*np.cos(telescope_position2[1])
-        m2 = np.cos(telescope_position2[0])*np.sin(telescope_position2[1])
-        n2 = np.sin(telescope_position2[0])
+        l2 = np.cos(self.telescope_position2[0])*np.cos(self.telescope_position2[1])
+        m2 = np.cos(self.telescope_position2[0])*np.sin(self.telescope_position2[1])
+        n2 = np.sin(self.telescope_position2[0])
 
         x = m1*n2 - n1*m1
         print(m1, "m1")
