@@ -74,12 +74,14 @@ class Stars():
         telescope.set_star_declination(s_declination)
         telescope.set_star_right_ascension(s_right_ascension)
         self.star_2 = [telescope.s_right_ascension, telescope.s_declination]
+        self.set_telescope_star_2_position()
 
     def define_star_1(self, s_declination, s_right_ascension):
         #function that stores the data for star_1
         telescope.set_star_declination(s_declination)
         telescope.set_star_right_ascension(s_right_ascension)
         self.star_1 = [telescope.s_right_ascension, telescope.s_declination]
+        self.set_telescope_star_1_position()
 
     def correction_matrices(self):
         #star1_data
@@ -91,20 +93,27 @@ class Stars():
         L2 = np.cos(stars.star_2[1])*np.cos(stars.star_2[0])
         M2 = np.cos(stars.star_2[1])*np.sin(stars.star_2[0])
         N2 = np.sin(stars.star_2[1])
-        
+    def set_telescope_star_1_position():        
         #star1_telescope_position
-        telescope_position = [altitude_encoder.get_degrees(), azimuth_encoder.get_degrees()]
-        l1 = np.cos(telescope_position[0])*np.cos(telescope_position[1])
-        m1 = np.cos(telescope_position[0])*np.sin(telescope_position[1])
-        n1 = np.sin(telescope_position[0])
+        telescope_position1 = [altitude_encoder.get_degrees(), azimuth_encoder.get_degrees()]
 
+        l1 = np.cos(telescope_position1[0])*np.cos(telescope_position1[1])
+        m1 = np.cos(telescope_position1[0])*np.sin(telescope_position1[1])
+        n1 = np.sin(telescope_position1[0])
+
+    def set_telescope_star_2_position():
         #star2_telescope_position
-        telescope_position = [altitude_encoder.get_degrees(), azimuth_encoder.get_degrees()]
-        l2 = np.cos(telescope_position[0])*np.cos(telescope_position[1])
-        m2 = np.cos(telescope_position[0])*np.sin(telescope_position[1])
-        n2 = np.sin(telescope_position[0])
+        telescope_position2 = [altitude_encoder.get_degrees(), azimuth_encoder.get_degrees()]
+
+        
+        l2 = np.cos(telescope_position2[0])*np.cos(telescope_position2[1])
+        m2 = np.cos(telescope_position2[0])*np.sin(telescope_position2[1])
+        n2 = np.sin(telescope_position2[0])
 
         x = m1*n2 - n1*m1
+        print(m1, "m1")
+        print(n2, "n2")
+        print(n1, "n1")
         print(x)
         x2 = x*x
         y = n1*l2 - l1*n2

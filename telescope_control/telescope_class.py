@@ -27,8 +27,6 @@ class Telescope():
         self.speed = 0
         self.tele_azimuth = 0
         self.tele_altitude = 0
-        self.azimuth_motor.set_speed_callback(self.azimuth_encoder.clear_flag)
-        self.altitude_motor.set_speed_callback(self.altitude_encoder.clear_flag)
     def set_azimuth(self):
         """
         sets the target azimuth after converting from right_ascension and 

@@ -35,16 +35,13 @@ class Encoder():
 
     def call_back_b(self, pin, level, tick):
         #defines a callback for when the b_state changes and determines in which direction the object is moving.
-        if hall_effect_flag:
-            if self.a_state:
-                self.position += 1
-                self.direction = "clockwise"
-            else:
-                self.position -= 1
-                self.direction = "counter_clockwise"
-                self.degree = self.position * self.constant
+        if self.a_state:
+            self.position += 1
+            self.direction = "clockwise"
         else:
-            pass 
+            self.position -= 1
+            self.direction = "counter_clockwise"
+            self.degree = self.position * self.constant
 
     def call_back_z(self, pin, level, tick):
         #function that counts the number of revolutions that the gear has made and resets the gear once it has reached 360 degrees of motion.

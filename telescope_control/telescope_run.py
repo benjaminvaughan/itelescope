@@ -2,7 +2,7 @@
 #file for stringing together everything and running the telescope
 from parsing_gps import GPS_parse
 from motor_class import Motor
-from encoder_class import Encoder and Hall_Effect_Sensors
+from encoder_class import Encoder
 from telescope_class import Telescope
 import pigpio
 import time
@@ -13,7 +13,8 @@ import click
 from angle_conversions import angle_conversions
 from keys import Keyboard
 from two_star_calibration import Two_Star_Calibration
-from telescope_calibration import Stars and Matrices
+from telescope_calibration import Stars
+from telescope_calibration import Matrices
 
 if __name__ == '__main__':
     #sets up the functions, and builds the different classes
