@@ -46,8 +46,6 @@ class Motor():
     def set_speed(self, speed):
         # if there is a callback registered, and speed changes from zero
         # to non-zero, call it
-        if not self.speed_callback is None and self.speed == 0 and speed != 0:
-            self.speed_callback()
         self.speed = speed
         if speed == 0:
             self.stopping_motor()

@@ -83,11 +83,11 @@ class Stars():
         self.star_1 = [telescope.s_right_ascension, telescope.s_declination]
         self.set_telescope_star_1_position()
 
-    def set_telescope_star_2_position():
+    def set_telescope_star_2_position(self):
         #star2_telescope_position
         self.telescope_position2 = [altitude_encoder.get_degrees(), azimuth_encoder.get_degrees()]
         
-    def set_telescope_star_1_position():        
+    def set_telescope_star_1_position(self):        
         #star1_telescope_position
         self.telescope_position1 = [altitude_encoder.get_degrees(), azimuth_encoder.get_degrees()]
         
@@ -136,7 +136,7 @@ class Stars():
         constant_2 = 1/math.sqrt(x2 + y2 + z2)
         L3 = constant_2* (M1*N2- N1*M2)
         M3 = constant_2* (N1*L2- L1*N2)
-        N3 = constnat_2* (L1*M2- M1*L2)
+        N3 = constant_2* (L1*M2- M1*L2)
         correction_matrix_2 = [L3, M3, N3]
         print(correction_matrix_1, correction_matrix_2)
 
@@ -152,7 +152,7 @@ class Stars():
         return self.transformation_matrix
 
     def inverse_transformation(self):
-        self.inverse_transformation_matrix = np.linalg.inv(transformation_matrix)
+        self.inverse_transformation_matrix = np.linalg.inv(self.transformation_matrix)
         return self.inverse_transformation_matrix
 
     

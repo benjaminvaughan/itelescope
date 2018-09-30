@@ -14,7 +14,6 @@ from angle_conversions import angle_conversions
 from keys import Keyboard
 from two_star_calibration import Two_Star_Calibration
 from telescope_calibration import Stars
-from telescope_calibration import Matrices
 
 if __name__ == '__main__':
     #sets up the functions, and builds the different classes
@@ -25,17 +24,11 @@ if __name__ == '__main__':
     mode = 'manual'
     gps_parse = GPS_parse()
     telescope.get_gast()
-    altitude_hall_effect = Hall_Effect_Sensors()
-    azimuth_hall_effect = Hall_Effect_Sensors()
-    azimuth_hall_effect.hall_effect_encoder_run()
-    altitude_hall_effect.hall_effect_encoder_run()
+    telescope.altitude_encoder.run_encoder()
+    telescope.azimuth_encoder.run_encoder()
     print(' AWSD or up, right, left, down for manual control, h to print longitude and latitude, C for callibration, l for manual input of longitude and latitude, g for goto mode and f for push to mode')
     while True:
         #while loop that runs the whole time checking for keyboard inputs
-        if azimuth_hall_effect.hall_effect_encoder_run() == True:
-            telescope.altitude_encoder.run_encoder()
-        if altitude_hall_effect.hall_effect_encoder_run() == True:
-            telescope.azimuth_encoder.run_altitude_encoder()        
         longlat = gps_parse.longitude_latitude()
         if not longlat is None:
             #if longlat isn't none then set the latitude and longitude to whatever the gps returns.
